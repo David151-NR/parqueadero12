@@ -10,7 +10,7 @@ bp = Blueprint('auth', __name__)
 
 @bp.route('/')
 def publicidad():
-    return render_template('indexpb.html')
+    return render_template('indexPb.html')
 
 
 @bp.route('/auth/login', methods=['GET', 'POST'])
