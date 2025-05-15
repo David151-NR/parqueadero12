@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Espacio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='listEspacio.css') }}">
+    <link rel="stylesheet" href="{{url_for('static',filename='w3.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+</head>
+<body>
+    <h1 class="titulo-elegante">Editar Espacio: {{ espacio.numero }}</h1><br><br>
+
+    <!-- Formulario para editar un espacio -->
+    <form method="POST">
+        <!-- Campo para el número del espacio -->
+        <div>
+            <label for="numero">Número de Espacio:</label>
+            <input type="text" id="numero" name="numero" value="{{ espacio.numero }}" required>
+        </div>
+
+        <!-- Campo para la descripción del espacio -->
+        <div>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion">{{ espacio.descripcion }}</textarea>
+        </div>
+        <!-- Campo para la ubicación del espacio -->
+        <div>
+            <label for="ubicacion">Ubicación (Ej. Piso 1, Espacio 101):</label>
+            <input type="text" id="ubicacion" name="ubicacion" value="{{ espacio.Ubicación }}" required>
+        </div>
+
+        <!-- Checkbox para el estado activo -->
+        <div>
+            <label for="activo">Activo:</label>
+            <input type="checkbox" id="activo" name="activo" {% if espacio.activo %}checked{% endif %}>
+        </div>
+
+        <!-- Botón de enviar -->
+        <div>
+            <button type="submit">Guardar Cambios</button>
+        </div>
+    </form>
+
+    <br>
+    <a href="{{ url_for('espacio.index') }}">Volver a la lista de espacios</a>
+</body>
+</html>

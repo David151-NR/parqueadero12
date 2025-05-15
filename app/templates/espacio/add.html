@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Espacio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='listEspacio.css') }}">
+    <link rel="stylesheet" href="{{url_for('static',filename='w3.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-title">Agregar Nuevo Espacio</h1>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="numero" class="form-label">Número:</label>
+                <input type="text" id="numero" name="numero" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="descripcion" class="form-label">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" class="form-input form-textarea" required></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="ubicacion" class="form-label">Ubicación:</label>
+                <input type="text" id="ubicacion" name="ubicacion" class="form-input" required>
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="disponible" name="disponible" class="checkbox-input" value="true">
+                <label for="disponible" class="checkbox-label">Disponible</label>
+            </div>
+            
+            <button type="submit" class="submit-btn">Guardar Espacio</button>
+        </form>
+        
+        <a href="{{ url_for('espacio.index') }}" class="back-link">← Volver al listado</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+from functools import wraps
+from flask import abort
+from flask_login import current_user
+
+# Decorador para verificar admin
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated or current_user.role != 'admin':
+            abort(403)
+        return f(*args, **kwargs)
+    return decorated_function
+    
+    bp = Blueprint('auth', __name__)
+
+@bp.route('/dashboard')
+@login_required
+def dashboard():
+    clientes = Clientes.query.all()
+    dataprod_motos = Motos.query.all()
+    dataprod_autos = Autos.query.all()
+    
+    # Pasamos is_admin al template
+    is_admin = current_user.role == 'admin'
+    
+    return render_template("/tutorial/tutorial.html", 
+                         datausu=current_user, 
+                         datausers=clientes, 
+                         dataprod_motos=dataprod_motos, 
+                         dataprod_autos=dataprod_autos,
+                         is_admin=is_admin)
+
+@bp.route('/add', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        namecli = request.form['namecli']
+        clave = request.form['passworduser']
+        role = request.form.get('role', 'user')  # Por defecto es 'user'
+        
+        new_user = Clientes(
+            namecli=namecli,
+            passworduser=clave,
+            role=role
+        )
+        
+        db.session.add(new_user)
+        db.session.commit()
+        
+        flash('Usuario creado exitosamente', 'success')
+        return redirect(url_for('auth.login'))
+    
+    # Si es GET, mostrar formulario
+    return render_template('/login/add.html')
+
+# Ruta solo para admin
+@bp.route('/admin/panel')
+@login_required
+@admin_required
+def admin_panel():
+    return render_template('admin/panel.html')

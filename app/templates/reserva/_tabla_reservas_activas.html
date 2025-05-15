@@ -1,0 +1,33 @@
+{% if reservas %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Espacio</th>
+            <th>Fecha Entrada</th>
+            <th>Fase</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reserva in reservas %}
+        <tr>
+            <td>{{ reserva.idReserva }}</td>
+            <td>{{ reserva.idCliente }}</td>
+            <td>{{ reserva.idEspacio }}</td>
+            <td>{{ reserva.fecha_entrada.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ reserva.fase }}</td>
+            <td>
+                <form action="{{ url_for('reserva.finalizar_reserva', id_reserva=reserva.idReserva) }}" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm">Finalizar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No tienes reservas activas.</p>
+{% endif %}
+

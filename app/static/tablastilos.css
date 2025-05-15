@@ -1,0 +1,186 @@
+.titulo-elegante {
+    font-family: 'Georgia', serif;
+    /* Fuente elegante */
+    font-size: 36px;
+    /* Tamaño grande para que resalte */
+    color: #0004ff;
+    /* Color elegante, un morado oscuro */
+    text-align: center;
+    /* Centrado */
+    text-transform: uppercase;
+    /* Transformación a mayúsculas */
+    letter-spacing: 2px;
+    /* Espaciado entre letras */
+    padding: 20px 0;
+    /* Espaciado en la parte superior e inferior */
+    border-bottom: 3px solid #00ffff;
+    /* Línea debajo para darle un toque sofisticado */
+    box-shadow: 0 4px 6px rgb(0, 174, 255);
+    /* Sombra suave para un efecto 3D */
+    margin: 0;
+  
+}
+
+.imagen-boton {
+    width: 250px;
+    height: 300px;
+    cursor: pointer;
+    clip-path: ellipse(60% 50% at 50% 50%);
+    transition: transform 0.5s ease;
+
+}
+
+.contenedor-espacios {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 300px;
+    max-width: 1000px;
+    margin-top: 200px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+.espacio {
+
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    /* Necesario para posicionar el número */
+    cursor: pointer;
+    /* Cambia el cursor al pasar sobre el espacio */
+    transition: all 0.3s ease;
+    /* Efecto suave al interactuar */
+}
+
+
+.espacio:hover {
+    transform: scale(1.05);
+    /* Efecto de zoom al pasar el mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Sombra al pasar el mouse */
+}
+
+.imagen-espacio {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Asegura que la imagen cubra todo el espacio */
+    border-radius: 7px;
+    /* Bordes redondeados para la imagen */
+}
+
+.numero-espacio {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+}
+
+.table {
+    width: 90%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    font-family: 'Roboto', sans-serif;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 16px;
+}
+
+th {
+    background-color: #007BFF;
+    color: white;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #e6f7ff;
+}
+
+
+.contenedor-botones {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+
+    width: 15rem;
+    padding: 15px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgb(89, 0, 255);
+
+    /* Elimina el posicionamiento fijo */
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    z-index: auto;
+
+    transition: all 0.3s ease-in-out;
+    margin: 20px auto 0 auto; /* Centrado horizontal debajo de la calculadora */
+}
+.calculadora-box{
+    .calculadora-box {
+        max-width: 500px;
+        margin: 40px auto;
+        padding: 40px 30px;
+        background: linear-gradient(135deg, #ffffff, #f1f3f5);
+        /* Degradado suave para más profundidad */
+        border: 1px solid #ced4da;
+        border-radius: 20px;
+        /* Esquinas más suaves y modernas */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        /* Sombra más suave y realista */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        /* Transiciones para interactividad */
+    }
+    
+    .calculadora-box:hover {
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        transform: translateY(-3px);
+        /* Efecto de elevación al pasar el cursor */
+    }
+    
+
+}

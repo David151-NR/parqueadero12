@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>temas relevantes sobre nuestros cervicios</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='w3.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='anuncios.css')}}">
+</head>
+<body>
+
+    <header>
+        <h1>Bienvenido a la Página Principal</h1>
+        <p>Aquí encontrarás contenido relevante y anuncios personalizados </p>
+    </header>
+    <br><br>
+    <div class="content">
+        <!-- Sección de Publicidad Relevante -->
+        <div class="advertisement">
+            <h2>Publicidad Relevante 1</h2>
+            <p>Este es un anuncio personalizado para ti, con información relevante según tus intereses.</p>
+            <img src="https://via.placeholder.com/400x200" alt="Publicidad" style="width: 100%; border-radius: 8px;">
+        </div>
+
+        <div class="advertisement">
+            <h2>Publicidad Relevante 2</h2>
+            <p>Otro anuncio que podría interesarte, basado en tus preferencias.</p>
+            <img src="https://via.placeholder.com/400x200" alt="Publicidad" style="width: 100%; border-radius: 8px;">
+        </div>
+    </div>
+
+    <div class="button-container" >
+        <a  class="w3-button w3-black" href="{{ url_for('auth.login') }}" >Iniciar sesion!!!</a>    
+    </div>
+    <div class="content">
+        <!-- Sección de Publicidad Relevante -->
+        <div class="advertisement">
+            <h2>Publicidad Relevante 3</h2>
+            <p>Este es un anuncio personalizado para ti, con información relevante según tus intereses.</p>
+            <img src="https://via.placeholder.com/400x200" alt="Publicidad" style="width: 100%; border-radius: 8px;">
+        </div>
+
+        <div class="advertisement">
+            <h2>Publicidad Relevante 4</h2>
+            <p>Otro anuncio que podría interesarte, basado en tus preferencias.</p>
+            <img src="https://via.placeholder.com/400x200" alt="Publicidad" style="width: 100%; border-radius: 8px;">
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+/* Estilo para la tabla de tarifas */
+.tarifas-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background: linear-gradient(145deg, #ffffff, #f8f8f8);
+    transition: transform 0.3s ease, box-shadow 0.4s ease;
+}
+
+.tarifas-table:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.tarifas-table th {
+    background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+    color: white;
+    padding: 1.2rem;
+    text-align: center;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+}
+
+.tarifas-table th:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.tarifas-table td {
+    padding: 1rem 1.2rem;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background 0.2s ease;
+}
+
+.tarifas-table tr:nth-child(even) {
+    background-color: rgba(240, 240, 240, 0.5);
+}
+
+.tarifas-table tr:last-child td {
+    border-bottom: none;
+}
+
+.tarifas-table tr:hover td {
+    background: rgba(110, 72, 170, 0.05);
+    transform: scale(1.01);
+}
+
+.tarifas-table td:first-child {
+    font-weight: 600;
+    color: #6e48aa;
+    text-align: left;
+}
+
+/* Efecto especial para precios */
+.tarifas-table .precio {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #2ecc71;
+    position: relative;
+    display: inline-block;
+}
+
+.tarifas-table .precio:before {
+    content: "$";
+    font-size: 0.9rem;
+    margin-right: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tarifas-table {
+        border-radius: 10px;
+    }
+    
+    .tarifas-table th,
+    .tarifas-table td {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .tarifas-table .precio {
+        font-size: 1rem;
+    }
+}

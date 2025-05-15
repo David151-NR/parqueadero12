@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Espacio</title>
+</head>
+<body>
+    <h1>Confirmar Eliminación</h1>
+    <p>¿Estás seguro de que deseas eliminar el espacio <strong>{{ espacio.numero }}</strong>?</p>
+
+    <!-- Formulario para confirmar la eliminación -->
+    <form method="POST">
+        <button type="submit">Sí, eliminar</button>
+    </form>
+    
+    <!-- Enlace para cancelar la eliminación y volver a la lista de espacios -->
+    <a href="{{ url_for('espacio.index') }}">Cancelar</a>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Espacios</title>
+    <title>Espacios del Cliente</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='listEspacio.css') }}">
+    <link rel="stylesheet" href="{{url_for('static',filename='w3.css')}}">
+</head>
+<body>
+    <h1 class="titulo-elegante">Lista de Espacios</h1>
+    
+    <!-- Tabla para mostrar los espacios -->
+    <table cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Descripción</th>
+                <th>Ubicación</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for espacio in data %}
+            <tr>
+                <td>{{ espacio.numero }}</td>
+                <td>{{ espacio.descripcion }}</td>
+                <td>{{ espacio.ubicación }}</td>
+                <td>{% if espacio.activo %}Sí{% else %}No{% endif %}</td>
+                <td>
+                    <!-- Enlace para editar el espacio -->
+                    <a href="{{ url_for('espacio.edit', id=espacio.idEspacio) }}">Editar</a> | 
+                    <!-- Enlace para eliminar el espacio -->
+                    <a href="{{ url_for('espacio.delete', id=espacio.idEspacio) }}" onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?');">Eliminar</a>  |
+                     <!-- Enlace para agregar un nuevo espacio -->
+                    <a href="{{ url_for('espacio.add') }}">Agregar Nuevo Espacio</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  
+
+</body>
+</html>

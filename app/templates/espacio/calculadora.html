@@ -1,0 +1,26 @@
+
+    <h1 class="titulo-elegante">Info del Espacios</h1>
+    <!-- Card: Calculadora de Precio -->
+    <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Calculadora de Precio</h5>
+          <form id="parkingForm1">
+            <div class="mb-3">
+              <label for="entryTime" class="form-label">Hora de Entrada</label>
+              <input type="datetime-local" id="entryTime" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label for="exitTime" class="form-label">Hora de Salida</label>
+              <input type="datetime-local" id="exitTime" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Calcular Precio</button>
+          </form>
+          <h4 class="mt-3">Precio Estimado: <span id="totalPrice">$0</span></h4>
+        </div>
+      </div>
+  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+

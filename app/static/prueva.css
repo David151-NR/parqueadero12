@@ -1,0 +1,361 @@
+/* Estilos generales */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Encabezado y título */
+/* Encabezado mejorado */
+.header-container {
+    display: flex;
+    flex-direction: column; /* Cambiado a columna para mejor responsividad */
+    width: 100%;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #9a7cca 0%, #9640b8 100%);
+}
+
+
+
+.button-group-container {
+    width: 100%;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    max-width: 1200px;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0;
+    }
+    
+    .titulo-elegante {
+        padding: 20px 10px;
+        letter-spacing: 2px;
+        font-size: clamp(20px, 8vw, 28px);
+    }
+    
+    .button-group-container {
+        padding: 10px;
+    }
+    
+    .button-group {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .button-group .btn {
+        flex: 1 1 120px;
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .button-group .btn {
+        width: 100%;
+    }
+}
+
+.titulo-elegante {
+    width: 100%;
+    font-family: 'Georgia', serif;
+    font-size: clamp(24px, 5vw, 36px); /* Tamaño responsive */
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    padding: 30px 20px;
+    border-bottom: 3px solid #00ffff;
+    box-shadow: 0 4px 6px rgba(0, 174, 255, 0.5);
+    margin: 0;
+    background: linear-gradient(135deg, #ff0101, #8400ff);
+    box-shadow: 0 12px 28px rgb(195, 0, 255);
+    transform: translateY(-4px);  
+}
+
+/* Grupo de botones */
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+/* Contenedor de espacios */
+.contenedor-espacios {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+/* Tarjetas de espacio */
+.espacio {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.espacio:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.imagen-espacio {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.numero-espacio {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 2;
+}
+
+.acciones-espacio {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+.acciones-espacio a {
+    background-color: white;
+    padding: 8px 12px;
+    font-size: 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 1px solid #007BFF;
+    color: #007BFF;
+    transition: all 0.3s ease;
+}
+
+.acciones-espacio a:hover {
+    background-color: #cc00ff;
+    color: white;
+}
+
+/* Botón Agregar */
+.btn-agregar {
+    display: block; /* Para centrar con margin auto */
+    margin: 40px auto;
+    background: linear-gradient(140deg, #8400ff, #ff0404);
+    color: rgb(2, 238, 255);
+    font-weight: bold;
+    padding: 16px 36px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0, 114, 255, 0.4);
+    transition: all 0.3s ease, box-shadow 0.4s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-agregar::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+    transform: rotate(25deg);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 0;
+}
+
+.btn-agregar:hover::before {
+    opacity: 1;
+}
+
+.btn-agregar:hover {
+    background: linear-gradient(135deg, #ff0101, #8400ff);
+    box-shadow: 0 12px 28px rgb(195, 0, 255);
+    transform: translateY(-4px);
+}
+
+.btn-agregar:active {
+    transform: scale(0.97);
+    box-shadow: 0 6px 14px rgba(0, 114, 255, 0.3);
+}
+
+.btn-agregar:focus {
+    outline: 3px solid #94d0ff;
+    outline-offset: 3px;
+}
+
+
+/* Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;  /* Fijo en la ventana */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1050;    /* Mayor que el z-index del contenido */
+    background-color: transparent;
+    overflow-y: auto; /* Permite scroll si el modal es muy grande */
+}
+
+.modal-container {
+ 
+    margin: 20px auto;  /* Centrado vertical con margen */
+    background-color: white;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: modalFadeIn 0.3s;
+    border: 1px solid #ddd; /* Borde sutil para definir el modal */
+}
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+    padding: 20px;
+    background: linear-gradient(135deg, #9a7cca 0%, #9640b8 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out; /* Animación de entrada */
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+.modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-body div {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    border-left: 4px solid #9640b8;
+}
+
+.modal-body p {
+    margin: 8px 0;
+    color: #333;
+}
+
+.modal-body p strong {
+    color: #9640b8;
+}
+
+/* Botón Mostrar Espacios */
+button[onclick="openModal()"] {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+button[onclick="openModal()"]:hover {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .button-group {
+        margin-top: 10px;
+        width: 100%;
+        flex-direction: column;
+    }
+    .button-group .btn {
+        width: 100%;
+    }
+}
+.modal-container {
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 9999;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}

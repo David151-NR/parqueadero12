@@ -1,0 +1,129 @@
+/* miestilo.css */
+
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Encabezado */
+header {
+    background: linear-gradient(135deg, #9a7cca 0%, #9640b8 100%);
+    color: #000000;
+    text-align: center;
+    padding: 2rem 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgb(0, 174, 255);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    margin: 0.5rem 0 0;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Contenedor principal */
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Anuncios */
+.advertisement {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.advertisement:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.advertisement h2 {
+    color: #6208f3;
+    margin-top: 0;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+
+.advertisement p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+/* Contenedor del botón */
+.button-container {
+    text-align: center;
+    margin: 3rem auto;
+    padding: 0 20px;
+    max-width: 1200px;
+}
+
+/* Botón personalizado (sobrescribiendo algunos estilos de w3.css) */
+.button-container .w3-button {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(6, 1, 255, 0.1);
+}
+
+.button-container .w3-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    background-color: #ff00ea !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    header p {
+        font-size: 1rem;
+    }
+    
+    .content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 1.5rem 1rem;
+    }
+    
+    header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .advertisement {
+        padding: 1rem;
+    }
+    
+    .button-container .w3-button {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}

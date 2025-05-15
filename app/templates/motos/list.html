@@ -1,0 +1,27 @@
+
+<header>
+    <nav class="navbar">
+        <h1 class="site-title">ComPuMoTos</h1>
+        <nav>
+            <a href="{{ url_for('users.index') }}"  href="nav-link">Administrar Usuarios</a>
+            <a class="nav-link" href="../modelo/productos/create.php">Ingresar Productos</a>
+            <a class="nav-link" href="#">Pedidos</a>
+            <a class="nav-link" href="#">compras Realizadas</a>
+            <a class="nav-link" href="#" class="disabled" aria-disabled="true">acerca de..</a>
+        </nav>
+    </nav>
+
+    <div class="user-info">
+
+        {% if datausu.imgper %}
+        <a><img src="{{ url_for('static', filename='imagenes/' + datausu.imgper) }}" alt="Foto de {{ datausu.nameuser }}" width="100" height="100"></a>
+        {% else %}
+             <a><img src="{{ url_for('static', filename='imagenes/usuario.bmp') }}" alt="Imagen por defecto" width="100" height="100"></a>
+             
+        {% endif %}
+        <img src="{{ url_for('static', filename='imagenes/' + datausu.get_img('imgper')) }}" alt="{{ datausu.nameuser }}" width="100" height="100">
+        <div>
+            <span>Usuario: {{ datausu.nameuser }}</span>
+            <a href="{{ url_for('auth.logout') }}" class="logout-cerrar_sesion">Cerrar sesión</a>
+    </div>
+</header>

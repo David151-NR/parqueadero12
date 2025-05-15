@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espacios del Cliente: {{ cliente.nombre }}</title>
+</head>
+<body>
+    <h1>Espacios de {{ cliente.nombre }}</h1>
+
+    <!-- Enlace para volver al listado de espacios generales -->
+    <a href="{{ url_for('espacio.index') }}">Volver a la lista de espacios</a>
+
+    <br><br>
+
+    <!-- Si el cliente tiene espacios, los mostramos en una tabla -->
+    {% if espacios %}
+    <table border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Número de Espacio</th>
+                <th>Descripción</th>
+                <th>Ubicación</th>
+                <th>Activo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for espacio in espacios %}
+            <tr>
+                <td>{{ espacio.numero }}</td>
+                <td>{{ espacio.descripcion }}</td>
+                <td>{{ espacio.Ubicación }}</td>
+                <td>{% if espacio.activo %}Sí{% else %}No{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Este cliente no tiene espacios asignados.</p>
+    {% endif %}
+
+</body>
+</html>
