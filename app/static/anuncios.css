@@ -127,3 +127,53 @@ header p {
         font-size: 1rem;
     }
 }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f5f5f5;
+    padding: 20px;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.advertisement {
+    flex: 1 1 400px;
+    max-width: 500px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.advertisement img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.button-container {
+    text-align: center;
+    margin: 30px 0;
+}
+
+/* Responsive para móviles */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    .advertisement {
+        flex: 1 1 100%;
+    }
+}
