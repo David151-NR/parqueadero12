@@ -2,7 +2,7 @@ services:
   web:
     image: python:3.13-alpine
     build:
-      context: "https://github.com/andetazz/11webtiendamotos.git"
+      context: "https://github.com/andetazz/parqueadero12.git"
       dockerfile: Dockerfile
     volumes:
       - app-data:/app
