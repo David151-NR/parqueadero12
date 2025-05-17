@@ -3,13 +3,14 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required,current_user
 from werkzeug.utils import secure_filename
 from app.models.Clientes import Clientes
+from app.routes import users_route
 from app import db
 
 
 bp = Blueprint('users', __name__)
 
 # Configuración para la subida de imágenes
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'avif'}
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'app', 'static\imagenes')  # Ruta absoluta
 
 # Verificar que la carpeta existe, si no, crearla
@@ -25,17 +26,18 @@ def index():
     data = Clientes.query.all()
     return render_template('cliente/index.html', data=data,datausu=current_user)
 
-@bp.route('/users/add', methods=['GET', 'POST'])
+
+@bp.route('/add/asdfasdfa', methods=['GET', 'POST'])
 @login_required
 def add():
+
     if request.method == 'POST':
         #print("📩 Datos recibidos:", request.form)
         #print("📂 Archivos recibidos:", request.files)
-
         namecli = request.form['namecli']
         passworduser = request.form['passworduser']
-        imgper = request.form['imgper']
-       
+        imgper = request.files['img1perf']
+  
         new_user = Clientes(passworduser=passworduser, namecli=namecli, imgper="tienda.png")
 
         # Verificar si 'img1' está en los archivos recibidos
@@ -43,7 +45,7 @@ def add():
             #flash("⚠ No se encontró la imagen en la solicitud", "error")
             #return redirect(request.url)
 
-        file = request.files['img1']
+        file = request.files['img1perf']
 
         #if file.filename == '':
             #flash("⚠ No se seleccionó ninguna imagen", "error")
@@ -68,9 +70,9 @@ def add():
         db.session.commit()
         flash('✅ Usuario creado correctamente')
         
-        return redirect(url_for('users.index'))  # Redirigir a la lista de usuarios
-
-    return render_template('usuarios/add.html')
+        #return redirect(url_for('users.index'))  # Redirigir a la lista de usuarios
+        return render_template('admin/admintt.html')
+    return render_template('admin/admintt.html')
 
 
 

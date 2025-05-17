@@ -16,23 +16,39 @@
 
 <body>
     {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="flash-message alert alert-{{ category }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        {% endif %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="flash-message alert alert-{{ category }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
     {% endwith %}
-
-    <header>
-        <h1>Bienvenido a Nuestro Sitio Web</h1>
-        <p>¡Aquí te mostramos cómo navegar por nuestra plataforma!</p>
-    </header>
-    
-    <br><br><br>
-    
+    <nav>
+        <header>
+            <h1>Bienvenido a Nuestro Sitio Web</h1>
+            <p>¡Aquí te mostramos cómo navegar por nuestra plataforma!</p>
+        
+            <div class="botones-header">
+                <form action="{{ url_for('auth.logout') }}" method="post">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                    </button>
+                </form>
+        
+                <button onclick="window.history.back()" class="btn btn-secondary boton-regresar">
+                    <i class="bi bi-arrow-left-circle"></i> Regresar
+                </button>
+        
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#tarifasModal">
+                    <i class="bi bi-cash-stack"></i> Ver Tarifas
+                </button>
+            </div>
+        </header>    
+    </nav>
+    <br><br>
     <main>
         <section class="instructions">
             <h2>Instrucciones para Navegar</h2>
@@ -51,45 +67,24 @@
 
             <div class="instruction-item">
                 <h3>3. Realiza Búsquedas</h3>
-                <p>Si buscas algo en específico, utiliza la barra de búsqueda ubicada en la parte superior del sitio.</p>
+                <p>Si buscas algo en específico, utiliza la barra de búsqueda ubicada en la parte superior del sitio.
+                </p>
             </div>
             <div class="button-container">
                 {% if current_user.rol == 'admin' %}
-                <!-- contenido para admin -->           
-                    <a class="btn btn-primary btn-reserva" href="{{ url_for('admin.admin_ruti') }}">
-                        ¡¡administrar sistemas¡¡
-                    </a>
+                <!-- contenido para admin -->
+                <a class="btn btn-primary btn-reserva" href="{{ url_for('admin.admin_ruti') }}">
+                    ¡¡administrar sistemas¡¡
+                </a>
                 {% else %}
-                    <div class="button-container">
-                        <a class="btn btn-primary btn-reserva" href="{{ url_for('Tipreser.index') }}">
-                            ¡¡Haz tu primer reserva!!
-                        </a>
-                    </div>
+                <div class="button-container">
+                    <a class="btn btn-primary btn-reserva" href="{{ url_for('Tipreser.index') }}">
+                        ¡¡Haz tu primer reserva!!
+                    </a>
+                </div>
                 {% endif %}
             </div>
-            
-            <div class="contenedor-botones">
-                <div class="card p-3 contenedor-botones" style="width: 15rem;">
-                    <div>
-                        <form action="{{ url_for('auth.logout') }}" method="post">
-                            <button type="submit" class="btn btn-danger w-100">
-                                <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
-                            </button>
-                        </form>
-                    </div>
-                    <div>
-                        <button onclick="window.history.back()" class="btn btn-secondary boton-regresar">
-                            <i class="bi bi-arrow-left-circle"></i> Regresar
-                        </button>
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal"
-                            data-bs-target="#tarifasModal">
-                            <i class="bi bi-cash-stack"></i> Ver Tarifas
-                        </button>
-                    </div>
-                </div>
-            </div>
+
         </section>
     </main>
 </body>

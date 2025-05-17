@@ -6,7 +6,7 @@ class Clientes(db.Model, UserMixin):
     __tablename__ = 'cliente'
     idCliente = db.Column(db.Integer, primary_key=True)
     namecli = db.Column(db.String(90), unique=True, nullable=False)
-    passworduser = db.Column(db.String(300), unique=True, nullable=False)  # Aquí se almacenará el hash
+    passworduser = db.Column(db.String(300), nullable=False)  # Aquí se almacenará el hash
     correo = db.Column(db.String(90), nullable=True)
     imgper = db.Column(db.String(300), nullable=True)
     rol = db.Column(db.String(20), default='cliente')  # admin, gestor, cliente

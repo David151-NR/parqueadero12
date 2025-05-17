@@ -13,7 +13,7 @@ def index():
 
 # Ruta para crear un nuevo tipo de reserva
 @bp.route('/reserva', methods=['POST'])
-def crear_reserva():
+def add():
     data = request.get_json()
     nombre = data.get('nombre')
     descripcion = data.get('descripcion')
