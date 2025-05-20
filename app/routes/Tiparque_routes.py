@@ -2,7 +2,9 @@ from flask import Blueprint, render_template, request, redirect, url_for, jsonif
 from app.models.Reserva import Reserva
 from app.models.Espacio import Espacio
 from app.models.Clientes import Clientes 
+from app.models.Garaje import Garaje
 from datetime import datetime
+
 from app import db
 
 bp = Blueprint('Tipreser', __name__)
@@ -12,24 +14,31 @@ def index():
     return render_template('tipo_parqueadero/index.html')
 
 # Ruta para crear un nuevo tipo de reserva
-@bp.route('/reserva', methods=['POST'])
-def add():
+@bp.route('/garaje', methods=['POST'])
+def agregar_garaje():
     data = request.get_json()
     nombre = data.get('nombre')
     descripcion = data.get('descripcion')
+    ubicacion = data.get('ubicacion')
 
-    if not nombre:
-        return jsonify({"error": "El nombre es obligatorio"}), 400
+    if not nombre or not ubicacion:
+        return jsonify({"error": "Nombre y ubicación son obligatorios"}), 400
 
-    tipo_reserva = Reserva(nombre=nombre, descripcion=descripcion)
-    db.session.add(Reserva)
+    # Validar que no se repita el nombre
+    if Garaje.query.filter_by(nombre=nombre).first():
+        return jsonify({"error": "Ya existe un garaje con ese nombre"}), 400
+
+    garaje = Garaje(nombre=nombre, descripcion=descripcion, ubicacion=ubicacion)
+    db.session.add(garaje)
     db.session.commit()
 
     return jsonify({
-        "id": tipo_reserva.id,
-        "nombre": tipo_reserva.nombre,
-        "descripcion": tipo_reserva.descripcion
+        "idEspacio": garaje.idEspacio,
+        "nombre": garaje.nombre,
+        "descripcion": garaje.descripcion,
+        "ubicacion": garaje.ubicacion
     }), 201
+
 
 # Ruta para obtener todos los tipos de reserva
 @bp.route('/tipos_reserva', methods=['GET'])

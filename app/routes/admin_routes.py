@@ -10,7 +10,8 @@ bp = Blueprint('admin', __name__)
 # Ruta principal del administrador (Dashboard)
 @bp.route('/adminmenu')
 def admin_ruti():
-    return render_template('admin/admintt.html')
+    espacio = Espacio.query.first() 
+    return render_template('admin/admintt.html', espacio=espacio)
 
 # --- CRUD para Clientes ---
 @bp.route('/admin/clientes', methods=['GET'])
@@ -41,5 +42,4 @@ def eliminar_cliente(id):
 @bp.route('/admin/parqueaderos')
 def listar_parqueaderos():
     return render_template('admin/parqueaderos/listar.html')
-
 # ... (Agregar rutas para crear/editar/eliminar parqueaderos)

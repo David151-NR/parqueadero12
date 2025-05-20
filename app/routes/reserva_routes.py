@@ -45,7 +45,7 @@ def crear_reserva(id_espacio):
             if not espacio.disponible:
                 print("22")
                 flash('Este espacio no está disponible', 'danger')
-                return redirect(url_for('espacio.list_espacios', id=espacio.idEspacio))
+                return redirect(url_for('espacio.list_espacios', id=espacio.idEspacio ))
                 #return render_template('espacio/infoespacio.html', espacio=espacio,datau=usersr)
               
             print("2")
@@ -55,7 +55,8 @@ def crear_reserva(id_espacio):
                 ubicación=espacio.ubicacion,
                 idCliente=idcliente,
                 idEspacio=id_espacio,
-                fecha_entrada=fecha_entrada
+                fecha_entrada=fecha_entrada,
+                placa=placa 
             )
             print("3")
             
@@ -66,12 +67,13 @@ def crear_reserva(id_espacio):
             db.session.commit()
             
             flash('Reserva creada exitosamente!', 'success')
-            return redirect(url_for('espacio.index'))
+            return redirect(url_for('espacio.index', espacio=espacio ))
             
         except Exception as e:
             db.session.rollback()
             print(str(e))
             flash(f'Error al crear reserva: {str(e)}', 'danger')
+    return render_template('espacio/infoespacio.html', espacio=espacio, datau=current_user)   
 
 @bp.route('/reserva/finalizar/<int:id_reserva>', methods=['POST'])
 def finalizar_reserva(id_reserva):
