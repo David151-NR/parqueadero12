@@ -11,7 +11,8 @@ bp = Blueprint('admin', __name__)
 @bp.route('/adminmenu')
 def admin_ruti():
     espacio = Espacio.query.first() 
-    return render_template('admin/admintt.html', espacio=espacio)
+    clientes = [c.to_dict() for c in Clientes.query.all()]
+    return render_template('admin/admintt.html', espacio=espacio, clientes=clientes)
 
 # --- CRUD para Clientes ---
 @bp.route('/admin/clientes', methods=['GET'])

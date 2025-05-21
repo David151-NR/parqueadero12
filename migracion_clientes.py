@@ -14,3 +14,4 @@ with app.app_context():
             cliente.rol = "cliente"
     db.session.commit()
     print("✅ Migración completada correctamente: campos corregidos.")
+    

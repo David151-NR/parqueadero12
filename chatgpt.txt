@@ -44,4 +44,12 @@ from app import db
  Estoy agregando funcion para poder editar las imagenes de cada rama.
  arreglar modales que mustren crud y haga funciones
 
+ 
+ +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++TAREAS+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ PS C:\Users\SENA\Documents\Nueva carpeta\copiasGaraje\2.8.15G_R> py migracion_clientes.py
+>>
+✅ Migración completada correctamente: campos corregidos.
+
 

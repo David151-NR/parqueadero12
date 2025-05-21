@@ -146,9 +146,11 @@
                         <div class="tab-pane fade" id="editarCliente">
                             <form id="editForm" method="POST">
                                 <div class="mb-3">
-                                    <label>Seleccionar cliente</label>
-                                    <select class="form-select" id="clienteSelect" name="idCliente">
-                                        {% for cliente in Clientes %}
+                                    <label for="clienteSelect">Buscar y seleccionar cliente</label>
+                                    <input type="text" class="form-control mb-2" id="busquedaCliente"
+                                        placeholder="Escribe para buscar...">
+                                    <select class="form-select" id="clienteSelect" name="idCliente" size="5">
+                                        {% for cliente in clientes %}
                                         <option value="{{ cliente.idCliente }}">{{ cliente.namecli }}</option>
                                         {% endfor %}
                                     </select>
@@ -163,7 +165,8 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Actualizar</button>
                             </form>
-                        </div>
+                        </div>                  
+
                         <!-- Eliminar Cliente -->
                         <div class="tab-pane fade" id="eliminarCliente">
                             <form>
@@ -467,28 +470,44 @@
                 });
         });
     </script>
-    <script>
-        const clientes = {{ clientes | tojson | safe }};
-        const select = document.getElementById('clienteSelect');
-        const inputNombre = document.getElementById('inputNombre');
-        const inputCorreo = document.getElementById('inputCorreo');
-        const form = document.getElementById('editForm');
+        <script>
+                            const clientes = {{ clientes | tojson | safe }};
+                            const busquedaInput = document.getElementById('busquedaCliente');
+                            const select = document.getElementById('clienteSelect');
+                            const inputNombre = document.getElementById('inputNombre');
+                            const inputCorreo = document.getElementById('inputCorreo');
+                            const form = document.getElementById('editForm');
 
-        select.addEventListener('change', function () {
-            const id = parseInt(this.value);
-            const cliente = clientes.find(c => c.idCliente === id);
-            if (cliente) {
-                inputNombre.value = cliente.namecli;
-                inputCorreo.value = cliente.correo || '';
-                form.action = `/edit/${cliente.idCliente}`;
-            }
-        });
+                            // Buscar mientras escribe
+                            busquedaInput.addEventListener('input', function () {
+                                const texto = this.value.toLowerCase();
+                                select.innerHTML = ''; // Limpiar
 
-        // Disparar el evento para precargar si hay algo seleccionado
-        if (select.value) {
-            select.dispatchEvent(new Event('change'));
-        }
-    </script>
+                                const filtrados = clientes.filter(c => c.namecli.toLowerCase().includes(texto));
+                                filtrados.forEach(c => {
+                                    const option = document.createElement('option');
+                                    option.value = c.idCliente;
+                                    option.textContent = c.namecli;
+                                    select.appendChild(option);
+                                });
+                            });
+
+                            // Cuando se selecciona un cliente del select
+                            select.addEventListener('change', function () {
+                                const id = parseInt(this.value);
+                                const cliente = clientes.find(c => c.idCliente === id);
+                                if (cliente) {
+                                    inputNombre.value = cliente.namecli;
+                                    inputCorreo.value = cliente.correo || '';
+                                    form.action = `/edit/${cliente.idCliente}`;
+                                }
+                            });
+
+                            // Disparar selección inicial si ya hay algo
+                            if (select.value) {
+                                select.dispatchEvent(new Event('change'));
+                            }
+                        </script>
 
 
 

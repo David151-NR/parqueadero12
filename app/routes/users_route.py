@@ -37,9 +37,10 @@ def add():
         #print("📂 Archivos recibidos:", request.files)
         namecli = request.form['namecli']
         passworduser = request.form['passworduser']
+        correo = request.form.get('correo') or ""  # 🟩 ← Esto evita None en BD
         imgper = request.files['img1perf']
   
-        new_user = Clientes(passworduser=passworduser, namecli=namecli, imgper="tienda.png")
+        new_user = Clientes(passworduser=passworduser, namecli=namecli,correo=correo, img1perf=imgper)
 
         # Verificar si 'img1' está en los archivos recibidos
         #if 'img1' not in request.files:
