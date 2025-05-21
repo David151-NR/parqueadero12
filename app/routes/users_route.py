@@ -23,8 +23,9 @@ def allowed_file(filename):
 
 @bp.route('/users')
 def index():
-    data = Clientes.query.all()
-    return render_template('cliente/index.html', data=data,datausu=current_user)
+    clientes = Clientes.query.all()
+    clientes_serializados = [c.to_dict() for c in clientes]
+    return render_template('cliente/index.html',clientes=clientes_serializados,datausu=current_user)
 
 
 @bp.route('/add/asdfasdfa', methods=['GET', 'POST'])
@@ -79,15 +80,16 @@ def add():
 
 @bp.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
-    clientes = Clientes.query.get_or_404(id)
+    cliente = Clientes.query.get_or_404(id)
 
     if request.method == 'POST':
-        clientes.namecli = request.form['namecli']
-        clientes.correo = request.form['correo']
-        db.session.commit()        
-        return redirect(url_for('users.index'))
+        cliente.namecli = request.form['namecli']
+        cliente.correo = request.form['correo']
+        db.session.commit()
+        return redirect(url_for('users.index'))  # Redirige a tu vista principal de clientes
 
-    return render_template('cliente/edit.html', datauser=clientes)
+    return render_template('cliente/edit.html', datauser=cliente)
+
 
 
 

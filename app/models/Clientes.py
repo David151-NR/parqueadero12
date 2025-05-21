@@ -7,13 +7,22 @@ class Clientes(db.Model, UserMixin):
     idCliente = db.Column(db.Integer, primary_key=True)
     namecli = db.Column(db.String(90), unique=True, nullable=False)
     passworduser = db.Column(db.String(300), nullable=False)  # Aquí se almacenará el hash
-    correo = db.Column(db.String(90), nullable=True)
-    imgper = db.Column(db.String(300), nullable=True)
+    correo = db.Column(db.String(90), nullable=False)
+    imgper = db.Column(db.String(300), nullable=False)
     rol = db.Column(db.String(20), default='cliente')  # admin, gestor, cliente
     
     reservas = db.relationship("Reserva", back_populates="cliente")
     motos = db.relationship("Motos", back_populates="cliente") 
-    autos = db.relationship("Autos", back_populates="cliente") 
+    autos = db.relationship("Autos", back_populates="cliente")
+
+    #DICCIONARIO
+    def to_dict(self):
+        return {
+            'idCliente': self.idCliente,
+            'namecli': self.namecli,
+            'correo': self.correo,
+            'rol': self.rol
+        }
 
     # Métodos para manejo seguro de contraseñas
     def set_password(self, password):

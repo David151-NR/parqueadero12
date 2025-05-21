@@ -1,4 +1,20 @@
-from functools import wraps
+ 
+ ✅ ¿Qué hacer ahora?
+OPCIÓN 1 – Completa la instalación:
+Si aún no hiciste clic en el botón “Install”, vuelve a la ventana y:
+
+🔵 Haz clic en Install
+
+Luego espera a que termine el proceso. Al finalizar, cierra todo, reinicia tu PC y prueba de nuevo en PowerShell:
+
+powershell
+Copiar
+Editar
+
+ 
+ 
+ 
+ from functools import wraps
 from flask import abort
 from flask_login import current_user
 
