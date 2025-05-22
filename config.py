@@ -1,16 +1,21 @@
-# config.py
+import os
 import secrets
+from dotenv import load_dotenv
+load_dotenv()
 
 class Config:
-    # This line of code is setting the SQLALCHEMY_DATABASE_URI configuration variable to a specific
-    # database URI. In this case, it is specifying a MySQL database connection using the PyMySQL
-    # driver, with the username 'root', an empty password, connecting to the localhost on port 3306,
-    # and using the database named 'login'. This URI will be used by the application to connect to the
-    # specified database.
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///flaskdb.sqlite'
-    #SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root@localhost:3306/garaje'
-    #SQLALCHEMY_DATABASE_URI = 'sqlite:///flaskdb.sqlite'
+    DB_USER = os.environ.get("DB_USER") #"alejandrobd"
+    DB_PASSWORD = os.environ.get("DB_PASSWORD")  
+    DB_HOST = os.environ.get("DB_HOST")#"38.242.137.70" 
+    raw_port = os.environ.get("DB_PORT")
+    if not raw_port or raw_port == "{DB_PORT}":
+        DB_PORT = "3311"
+    else:
+        DB_PORT = raw_port
+    DB_NAME = os.environ.get("DB_NAME") 
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = secrets.token_urlsafe(24)
+    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@38.242.137.70:{DB_PORT}/{DB_NAME}"
 
-    #pip install --no-index --find-links=librerias -r requirements.txt
+#Comandos para descargar en instalar todas las librerias offline
