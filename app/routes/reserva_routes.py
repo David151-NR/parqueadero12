@@ -73,7 +73,28 @@ def crear_reserva(id_espacio):
             db.session.rollback()
             print(str(e))
             flash(f'Error al crear reserva: {str(e)}', 'danger')
-    return render_template('espacio/infoespacio.html', espacio=espacio, datau=current_user)   
+    return render_template('espacio/infoespacio.html', espacio=espacio, datau=current_user)
+
+@bp.route('/reserva/actualizar', methods=['POST'])
+def actualizar_reserva():
+    try:
+        reserva_id = request.form.get('reserva_id')
+        nueva_fecha_creacion = request.form.get('fecha_creacion')
+        
+        reserva = Reserva.query.get_or_404(reserva_id)
+
+        # Convertir la fecha si es necesario
+        if nueva_fecha_creacion:
+            reserva.fecha_creacion = datetime.strptime(nueva_fecha_creacion, "%Y-%m-%d %H:%M:%S")
+
+        db.session.commit()
+        flash('Reserva actualizada correctamente', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error al actualizar la reserva: {str(e)}', 'danger')
+
+    return redirect(url_for('reserva.tabla_reservas_activas'))
+
 
 @bp.route('/reserva/finalizar/<int:id_reserva>', methods=['POST'])
 def finalizar_reserva(id_reserva):

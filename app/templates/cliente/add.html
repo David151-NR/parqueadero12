@@ -23,20 +23,19 @@
     <form action="{{ url_for('users.add') }}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nameuser" placeholder="Nombre usuario" required>
+            <input type="text" id="nombre" name="namecli" placeholder="Nombre usuario" required>
         </div>
         
         <div class="form-group">
-            <label for="claveuser">Clave:</label>
-            <input type="password" id="claveuser" name="claveuser" placeholder="contraseña" required>
+            <label for="claveuser">Clave:</label>        
+            <input type="password" id="claveuser" name="passworduser" placeholder="contraseña" required>
         </div>
         
         <div class="form-group">
             <label for="vclaveuser">Verifique su clave:</label>
-            <input type="password" id="vclaveuser" name="vclaveuser" placeholder="verifique su contraseña" required oninput="validarconcidencia(this)">
+           <input type="password" id="vclaveuser" name="vclaveuser" placeholder="verifique su contraseña" required oninput="validarconcidencia(this)">
         </div>
-
-    
+   
         <div class="form-group">
             <input type="text" name="nombre" placeholder="Nombre Completo Usuario">
         </div>

@@ -74,7 +74,7 @@ def add():
         
         return redirect(url_for('admin.admin_ruti'))  # Redirigir a la lista de usuarios
         
-    return render_template('admin/admintt.html' )
+    return render_template('admin/admintt.html' )   
 
 
 

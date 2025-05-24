@@ -165,7 +165,7 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Actualizar</button>
                             </form>
-                        </div>                  
+                        </div>
 
                         <!-- Eliminar Cliente -->
                         <div class="tab-pane fade" id="eliminarCliente">
@@ -378,6 +378,7 @@
                     </ul>
 
                     <div class="tab-content mt-3">
+                         {% if espacio %}
                         <!-- Agregar Reserva -->
                         <div class="tab-pane fade show active" id="agregarReserva">
                             <form action="{{ url_for('reserva.crear_reserva', id_espacio=espacio.idEspacio) }}"
@@ -397,26 +398,9 @@
                                 <button type="submit" class="btn btn-success">Guardar</button>
                             </form>
                         </div>
-
+                         {% endif %}
                         <!-- Editar Reserva -->
-                        <div class="tab-pane fade" id="editarReserva">
-                            <form>
-                                <div class="mb-3">
-                                    <label>Seleccionar un Reservas</label>
-                                    <select class="form-select">
-                                        <option>Reserva 1</option>
-                                        <option>Reserva 2</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label>fecha de creacion</label>
-                                    <!-- proximamente se agregara para poder editar las imagenes -->
-                                    <input type="text" class="form-control" required>
-                                </div>
-                                <button class="btn btn-primary">Actualizar</button>
-                            </form>
-                        </div>
-
+                
                         <!-- Eliminar garajes -->
                         <div class="tab-pane fade" id="eliminarReserva">
                             <form>
@@ -470,44 +454,44 @@
                 });
         });
     </script>
-        <script>
-                            const clientes = {{ clientes | tojson | safe }};
-                            const busquedaInput = document.getElementById('busquedaCliente');
-                            const select = document.getElementById('clienteSelect');
-                            const inputNombre = document.getElementById('inputNombre');
-                            const inputCorreo = document.getElementById('inputCorreo');
-                            const form = document.getElementById('editForm');
+    <script>
+        const clientes = {{ clientes | tojson | safe }};
+        const busquedaInput = document.getElementById('busquedaCliente');
+        const select = document.getElementById('clienteSelect');
+        const inputNombre = document.getElementById('inputNombre');
+        const inputCorreo = document.getElementById('inputCorreo');
+        const form = document.getElementById('editForm');
 
-                            // Buscar mientras escribe
-                            busquedaInput.addEventListener('input', function () {
-                                const texto = this.value.toLowerCase();
-                                select.innerHTML = ''; // Limpiar
+        // Buscar mientras escribe
+        busquedaInput.addEventListener('input', function () {
+            const texto = this.value.toLowerCase();
+            select.innerHTML = ''; // Limpiar
 
-                                const filtrados = clientes.filter(c => c.namecli.toLowerCase().includes(texto));
-                                filtrados.forEach(c => {
-                                    const option = document.createElement('option');
-                                    option.value = c.idCliente;
-                                    option.textContent = c.namecli;
-                                    select.appendChild(option);
-                                });
-                            });
+            const filtrados = clientes.filter(c => c.namecli.toLowerCase().includes(texto));
+            filtrados.forEach(c => {
+                const option = document.createElement('option');
+                option.value = c.idCliente;
+                option.textContent = c.namecli;
+                select.appendChild(option);
+            });
+        });
 
-                            // Cuando se selecciona un cliente del select
-                            select.addEventListener('change', function () {
-                                const id = parseInt(this.value);
-                                const cliente = clientes.find(c => c.idCliente === id);
-                                if (cliente) {
-                                    inputNombre.value = cliente.namecli;
-                                    inputCorreo.value = cliente.correo || '';
-                                    form.action = `/edit/${cliente.idCliente}`;
-                                }
-                            });
+        // Cuando se selecciona un cliente del select
+        select.addEventListener('change', function () {
+            const id = parseInt(this.value);
+            const cliente = clientes.find(c => c.idCliente === id);
+            if (cliente) {
+                inputNombre.value = cliente.namecli;
+                inputCorreo.value = cliente.correo || '';
+                form.action = `/edit/${cliente.idCliente}`;
+            }
+        });
 
-                            // Disparar selección inicial si ya hay algo
-                            if (select.value) {
-                                select.dispatchEvent(new Event('change'));
-                            }
-                        </script>
+        // Disparar selección inicial si ya hay algo
+        if (select.value) {
+            select.dispatchEvent(new Event('change'));
+        }
+    </script>
 
 
 
