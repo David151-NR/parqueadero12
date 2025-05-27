@@ -36,35 +36,41 @@
 <body>
   <div class="container py-4">
     <h1 class="mb-4 text-center">Información del Espacio</h1>
-    <main class="flex-shrink-0">
-      <div class="container mt-4 mx-auto">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="flash-message alert alert-{{ category }} alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-      </div>
-    </main>
-
     <!-- Card: Información del espacio -->
     <div class="card mb-4">
       <div class="card-body">
+        <div class="btn-agregar">
+          <div class="container">
+            <div class="button-group">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acercaModal">
+                <i class="bi bi-info-circle"></i> Acerca de nosotros
+              </button>
+              <button onclick="window.history.back()" class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Regresar
+              </button>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tarifasModal">
+                <i class="bi bi-cash-stack"></i> Tarifas
+              </button>
+              <form action="{{ url_for('auth.logout') }}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger">
+                  <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                </button>
+                <!-- Botón que abre el modal -->
+                {% if reserva %}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  data-bs-target="#detalleModal2{{ espacio.numero }}">
+                  <i class="bi bi-calculator"></i> Finalizar Reserva2
+                </button>
+                {% endif %}
+              </form>
+           
+            </div><br>
+          </div>
+        </div>
         <h5 class="card-title">Espacio #{{ espacio.numero }}</h5>
         <p class="card-text"><strong>Descripción:</strong> {{ espacio.descripcion }}</p>
         <p class="card-text"><strong>Ubicación:</strong> {{ espacio.ubicación }}</p>
         <p class="card-text"><strong>Disponible:</strong> {% if espacio.disponible %}Sí{% else %}No{% endif %}</p>
-
-        <p>
-          <a href="{{ url_for('espacio.edit', id=espacio.idEspacio) }}"
-            class="btn btn-outline-primary btn-sm">Editar</a>
-          <a href="{{ url_for('espacio.delete', id=espacio.idEspacio) }}" class="btn btn-outline-danger btn-sm"
-            onclick="return confirm('¿Estás seguro de que deseas eliminar este espacio?');">Eliminar</a>
-        </p>
 
         <form action="{{ url_for('reserva.crear_reserva', id_espacio=espacio.idEspacio) }}" method="post">
           <div class="form-group">
@@ -83,51 +89,18 @@
 
             <label for="Placa">Placa:</label>
             <input type="text" class="form-control" id="Placa" name="Placa" value="" required>
-            <div>                        
-              <form action="{{ url_for('reserva.crear_reserva', id_espacio=espacio.idEspacio) }}" method="post">
+               <form action="{{ url_for('reserva.crear_reserva', id_espacio=espacio.idEspacio) }}"
+                method="post">
                 <!-- campos del formulario de creación -->
                 <button type="submit" class="btn btn-outline-success btn-sm">Reservar espacio</button>
               </form>
-              
-              {% if reserva %}
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                 data-bs-target="#detalleModal2{{ espacio.numero }}">
-                <i class="bi bi-calculator"></i> Finalizar Reserva2
-              </button>
-              {% endif %}        
-      
-              <!-- Botón que abre el modal -->
-            </div>
           </div>
         </form>
       </div>
     </div>
-    <div class="btn-agregar">
-      <div class="container">
-        <div class="button-group">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#detalleModal{{ espacio.numero }}">
-            <i class="bi bi-calculator"></i> calculadora Tiempos
-          </button>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acercaModal">
-            <i class="bi bi-info-circle"></i> Acerca de nosotros
-          </button>
-          <button onclick="window.history.back()" class="btn btn-secondary">
-            <i class="bi bi-arrow-left-circle"></i> Regresar
-          </button>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tarifasModal">
-            <i class="bi bi-cash-stack"></i> Tarifas
-          </button>
-          <form action="{{ url_for('auth.logout') }}" method="post" style="display: inline;">
-            <button type="submit" class="btn btn-danger">
-              <i class="bi bi-box-arrow-right"></i> Serar cesion
-            </button>
-          </form>
-        </div><br>
-      </div>
-    </div>
+
     {% if reserva %}
-      <div class="modal fade" id="detalleModal2{{ espacio.numero }}" tabindex="-1" aria-labelledby="detalleModalLabel2"
+    <div class="modal fade" id="detalleModal2{{ espacio.numero }}" tabindex="-1" aria-labelledby="detalleModalLabel2"
       aria-hidden="true">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -146,47 +119,48 @@
         </div>
       </div>
     </div>
-    </div>
-  {% endif %}  
-<script>
-  function getBogotaDateTime() {
-    const now = new Date();
-    const bogotaDateString = now.toLocaleString("sv-SE", {
-      timeZone: "America/Bogota",
-      hour12: false,
-    });
-    const bogotaDateTimeLocal = bogotaDateString.replace(" ", "T").slice(0, 16);
-    return bogotaDateTimeLocal;
-  }
-
-  document.addEventListener('shown.bs.modal', function (event) {
-    const modal = event.target;
-
-    // Solo aplica si el modal contiene un campo con ID "exitTime"
-    const exitInput = modal.querySelector("#exitTime");
-    if (exitInput) {
-      exitInput.value = getBogotaDateTime();
+  </div>
+  {% endif %}
+  <script>
+    function getBogotaDateTime() {
+      const now = new Date();
+      const bogotaDateString = now.toLocaleString("sv-SE", {
+        timeZone: "America/Bogota",
+        hour12: false,
+      });
+      const bogotaDateTimeLocal = bogotaDateString.replace(" ", "T").slice(0, 16);
+      return bogotaDateTimeLocal;
     }
-  });
-</script>
+
+    document.addEventListener('shown.bs.modal', function (event) {
+      const modal = event.target;
+
+      // Solo aplica si el modal contiene un campo con ID "exitTime"
+      const exitInput = modal.querySelector("#exitTime");
+      if (exitInput) {
+        exitInput.value = getBogotaDateTime();
+      }
+    });
+  </script>
 
   <!-- Scripts -->
-   
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // Insertar variables desde Jinja como datos JS
-      const mostrarModal = {{ mostrar_modal | default(0) | int }};
-      const horas = {{ horas | default(0) | int }};
-      const minutos = {{ minutos | default(0) | int }};
-  
-      if (mostrarModal && (horas !== null && minutos !== null)) {
-        const duracionModal = new bootstrap.Modal(document.getElementById('duracionModal'));
-        duracionModal.show();
-      }
+      const mostrarModal = {{ mostrar_modal | default (0) | int
+    }};
+    const horas = {{ horas | default (0) | int }};
+    const minutos = {{ minutos | default (0) | int }};
+
+    if (mostrarModal && (horas !== null && minutos !== null)) {
+      const duracionModal = new bootstrap.Modal(document.getElementById('duracionModal'));
+      duracionModal.show();
+    }
     });
-  </script>   
+  </script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const entradaInput = document.getElementById('fentrada');
@@ -235,7 +209,7 @@
       });
     });
   </script>
- 
+
 
 
 </body>

@@ -82,28 +82,7 @@
     align-items: center;
     gap: 6px;               /* Espacio entre el ícono y el texto */
 }
-.contenedor-botones {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 12px;
 
-    width: 15rem;
-    padding: 15px;
-    background: linear-gradient(145deg, #ffffff, #f0f0f0); /* Tonalidad suave */
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgb(89, 0, 255);
-
-    position: fixed;
-    top: 50%;
-    left: 50px;
-    transform: translateY(-50%);
-    z-index: 100;
-
-    transition: all 0.3s ease-in-out;
-}
 
 .contenedor-botones:hover {
     box-shadow: 0 10px 25px rgb(255, 1, 1); /* efecto hover */

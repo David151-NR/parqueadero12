@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selecciona un vehículo</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
-    <link rel="stylesheet" href="{{ url_for('static', filename='reserva.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='miestilo2.css') }}">
     <link rel="stylesheet" href="{{url_for('static',filename='w3.css')}}">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -16,31 +16,30 @@
 
 <body>
     <!-- bottones de acciones -->
-    <div  class="contenedor-botones">
-        <div class="card p-3 contenedor-botones" style="width: 15rem;">
-            <div>
-                <form action="{{ url_for('auth.logout') }}" method="post">
-                    <button type="submit" class="btn btn-danger w-100">
-                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+
+
+    <div> <!-- parqueaderos IMG CON accion -->
+        <nav>
+            <header>
+                <h1 class="titulo-elegante ">seleciona un garaje</h1>               
+                <div >
+                    <form action="{{ url_for('auth.logout') }}" method="post">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                        </button>
+                    </form>
+
+                    <button onclick="window.history.back()" class="btn btn-secondary boton-regresar">
+                        <i class="bi bi-arrow-left-circle"></i> Regresar
                     </button>
-                </form>
-            </div>
-            <div>
-                <button onclick="window.history.back()" class="btn btn-secondary boton-regresar">
-                    <i class="bi bi-arrow-left-circle"></i> Regresar
-                </button>
-            </div>
-            <div>
-                <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#tarifasModal">
-                    <i class="bi bi-cash-stack"></i> Ver Tarifas
-                </button>
-            </div>
-        </div>
-    </div> 
-    <div>
-            <!-- parqueaderos IMG CON accion -->
-        <h2 class="titulo-elegante">Selecciona un vehículo</h2><br><br><br>
-        <div class="instructions">                                               
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tarifasModal">
+                        <i class="bi bi-cash-stack"></i> Ver Tarifas
+                    </button>
+                </div>
+            </header>
+        </nav>
+        <div class="instructions">
             <div class="contenedor-imagenes">
                 <img src="{{ url_for('static', filename='imagenes/Mustang.jpg') }}" onclick="mostrarMensajeYRedirigir()"
                     alt="Auto" class="imagen-boton">
@@ -48,7 +47,7 @@
                     alt="Auto" class="imagen-boton">
                 <img src="{{ url_for('static', filename='imagenes/avion.jpg') }}" onclick="mostrarMensajeYRedirigir()"
                     alt="Auto" class="imagen-boton">
-            </div>        
+            </div>
             <br>
             <br>
             <br>
@@ -59,7 +58,7 @@
                     alt="Auto" class="imagen-boton">
                 <img src="{{ url_for('static', filename='imagenes/bici.webp') }}" onclick="mostrarMensajeYRedirigir()"
                     alt="Auto" class="imagen-boton">
-            </div>   
+            </div>
         </div>
     </div>
     <!-- Modal de Tarifas -->
@@ -75,8 +74,8 @@
                     <!-- Pestañas para diferentes tipos -->
                     <ul class="nav nav-tabs" id="tarifasTabs" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="carros-tab" data-bs-toggle="tab" data-bs-target="#carros"
-                                type="button" role="tab">Carros</button>
+                            <button class="nav-link active" id="carros-tab" data-bs-toggle="tab"
+                                data-bs-target="#carros" type="button" role="tab">Carros</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="motos-tab" data-bs-toggle="tab" data-bs-target="#motos"
@@ -86,10 +85,10 @@
                             <button class="nav-link" id="avion-tab" data-bs-toggle="tab" data-bs-target="#avion"
                                 type="button" role="tab">Aviones</button>
                         </li>
-                
+
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tractomula-tab" data-bs-toggle="tab" data-bs-target="#tractomula"
-                                type="button" role="tab">Tractomulas</button>
+                            <button class="nav-link" id="tractomula-tab" data-bs-toggle="tab"
+                                data-bs-target="#tractomula" type="button" role="tab">Tractomulas</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="yate-tab" data-bs-toggle="tab" data-bs-target="#yate"
@@ -100,8 +99,8 @@
                                 type="button" role="tab">Ciclas</button>
                         </li>
                     </ul>
-          
-                  
+
+
                     <!-- Contenido de las pestañas -->
                     <div class="tab-content p-3" id="tarifasTabsContent">
                         <!-- Tab Carros -->
@@ -271,7 +270,7 @@
                                 </tbody>
                             </table>
                         </div>
-         
+
 
                         <!-- Tab Yates -->
                         <div class="tab-pane fade" id="yate" role="tabpanel">
@@ -365,7 +364,7 @@
         </div>
     </div>
     <script>
-        function mostrarMensajeYRedirigir() {       
+        function mostrarMensajeYRedirigir() {
             window.location.href = 'indexespacio';
         }
         function openModal() {

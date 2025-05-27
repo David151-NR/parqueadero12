@@ -1,0 +1,110 @@
+body {
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.card h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #00796b;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="file"] {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: all 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #00ffe1;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 121, 107, 0.2);
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.btn-submit {
+  background: linear-gradient(to right, #ff0000, #6200ff);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  background: linear-gradient(to right, #003cff, #ff0022);
+  transform: scale(1.05);
+}
+
+.btn-cancel {
+    background: linear-gradient(to right, #ff0000, #6200ff);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-cancel:hover {
+    background: linear-gradient(to right, #003cff, #ff0022);
+    transform: scale(1.05);
+    }
+
+.flash-message {
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* Clases de alerta por categoría (puedes personalizarlas más) */
+.alert-success {
+  background-color: #e6f4ea;
+  color: #ff0000;
+}
+
+.alert-danger {
+  background-color: #fdecea;
+  color: #c62828;
+}
