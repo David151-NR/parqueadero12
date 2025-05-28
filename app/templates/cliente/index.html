@@ -2,7 +2,6 @@
 {% block titulo_pagina %}Lista de Usuarios{% endblock %}
 {% block content %}
 
-
 <table>
     <tr>
         <th>ID</th>
@@ -13,20 +12,96 @@
     {% for usuario in clientes %}
     <tr>
         <td>{{ usuario.idCliente }}</td>
-        <td>{{ usuario.namecli }}</td>      
-        <td><img src="{{ url_for('static', filename=usuario.imgper) }}" alt="Perfil" style="width: 50px; height: 50px; border-radius: 50%;"></td>
-    
-
+        <td>{{ usuario.namecli }}</td>
+        <td><img src="{{ url_for('static', filename=usuario.imgper) }}"
+                alt="Perfil"
+                style="width: 50px; height: 50px; border-radius: 50%;"></td>
 
         <td>
-            <a href="{{ url_for('users.edit', id=usuario.idCliente) }}">Editar</a>
-            <a href="{{ url_for('users.delete', id=usuario.idCliente) }}">Eliminar</a>
+            <a
+                href="{{ url_for('users.edit', id=usuario.idCliente) }}">Editar</a>
+            <a
+                href="{{ url_for('users.delete', id=usuario.idCliente) }}">Eliminar</a>
+            <button data-id="{{ usuario.idCliente }}"
+                onclick="abrirModalReservas(this.dataset.id)"
+                class="btn-agregar">
+                Detalles
+            </button>
+
         </td>
+
     </tr>
+    
     {% endfor %}
 
 </table>
 
 {% endblock %}
-<a class="btn btn-primary btn-sm mb-1" href="{{ url_for('users.add') }}">Agregar Usuario</a>
-<a class="btn btn-sm btn-success mb-1" href="{{ url_for('auth.dashboard') }}">Regresar</a>
+<a class="btn btn-primary btn-sm mb-1" href="{{ url_for('users.add') }}">Agregar
+    Usuario</a>
+<a class="btn btn-sm btn-success mb-1"
+    href="{{ url_for('auth.dashboard') }}">Regresar</a>
+
+<!-- Modal de espacios reservados -->
+<div id="modalOverlay" class="modal-overlay" style="display: none;">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h2>Reservas del cliente</h2>
+            <button class="close-btn" onclick="abrirModalReservas()">&times;</button>
+        </div>
+        <div class="modal-body" id="contenidoReservas">
+            <p>Cargando reservas...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function abrirModalReservas() {
+        document.getElementById('modalOverlay').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').style.display = 'none';
+    }
+</script>
+
+<script>
+    function abrirModalReservas() {
+        const modal = document.getElementById('modalOverlay');
+        const contenido = document.getElementById('contenidoReservas');
+        contenido.innerHTML = '<p>Cargando tus reservas...</p>';
+        modal.style.display = 'block';
+        document.body.classList.add('modal-open');
+
+        fetch("{{ url_for('reserva.tabla_reservas_activas') }}")
+            .then(response => response.text())
+            .then(data => {
+                contenido.innerHTML = data;
+            })
+            .catch(error => {
+                contenido.innerHTML = "<p>Error al cargar tus reservas.</p>";
+                console.error("Error:", error);
+            });
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('modalOverlay');
+        modal.style.display = 'none';
+        document.body.classList.remove('modal-open');
+    }
+
+    // Cierra el modal si el usuario hace clic fuera
+    window.addEventListener('click', function (event) {
+        const modal = document.getElementById('modalOverlay');
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Cierra con Escape
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            closeModal();
+        }
+    });
+</script>

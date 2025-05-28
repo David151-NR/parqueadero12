@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required,current_user
 from werkzeug.utils import secure_filename
 from app.models.Clientes import Clientes
+from app.models.Reserva import Reserva
 from app import db
 
 
@@ -100,6 +101,15 @@ def delete(id):
     db.session.commit()
 
     return redirect(url_for('clientes.index'))
+
+
+
+@bp.route('/users/<int:idCliente>/reservas')
+def reservas_cliente(idCliente):
+    reservas = Reserva.query.filter_by(idCliente=idCliente).all()
+    # Renderizas solo el fragmento HTML para el modal con las reservas
+    return render_template('reservas_cliente.html', reservas=reservas)
+
 
 
 
