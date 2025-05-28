@@ -3,7 +3,6 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required,current_user
 from werkzeug.utils import secure_filename
 from app.models.Clientes import Clientes
-from app.routes import users_route
 from app import db
 
 
@@ -11,7 +10,7 @@ bp = Blueprint('users', __name__)
 
 # Configuración para la subida de imágenes
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'avif'}
-UPLOAD_FOLDER = os.path.join(os.getcwd(), 'app', 'static\imagenes')  # Ruta absoluta
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'app', 'static\\imagenes')# Ruta absoluta
 
 # Verificar que la carpeta existe, si no, crearla
 if not os.path.exists(UPLOAD_FOLDER):
@@ -21,7 +20,7 @@ def allowed_file(filename):
     """Verifica si la extensión del archivo es válida."""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@bp.route('/users')
+@bp.route('/list')
 def index():
     clientes = Clientes.query.all()
     clientes_serializados = [c.to_dict() for c in clientes]
@@ -38,9 +37,9 @@ def add():
         namecli = request.form['namecli']
         passworduser = request.form['passworduser']
         correo = request.form.get('correo') or ""  # 🟩 ← Esto evita None en BD
-        imgper = request.files['img1perf']
+        imgper = request.files['imgper']
   
-        new_user = Clientes(passworduser=passworduser, namecli=namecli,correo=correo, img1perf=imgper)
+        new_user = Clientes(passworduser=passworduser, namecli=namecli,correo=correo,imgper=imgper)
 
         # Verificar si 'img1' está en los archivos recibidos
         #if 'img1' not in request.files:

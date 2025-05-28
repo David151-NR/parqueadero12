@@ -1,7 +1,0 @@
-  <!-- Campo para la plantilla tiempo duracion-->
-  {% if reserva.duracion_segundos %}
-  <p><strong>Duración:</strong>
-  {{ reserva.duracion_segundos // 3600 }} h
-  {{ (reserva.duracion_segundos % 3600) // 60 }} min
-  </p>
-{% endif %}
