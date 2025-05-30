@@ -1,0 +1,29 @@
+<h3>Reservas de {{ cliente_nombre }}</h3>
+{% if reservas %}
+    <table class="table table-striped table-bordered"> {# Puedes agregar clases de Bootstrap si usas #}
+        <thead>
+            <tr>
+                <th>ID Reserva</th>
+                <th>Espacio</th>
+                <th>Placa</th>
+                <th>Fecha Entrada</th>
+                <th>Fecha Salida</th>
+                <th>Fase</th>
+                </tr>
+        </thead>
+        <tbody>
+            {% for reserva in reservas %}
+            <tr>
+                <td>{{ reserva.idReserva }}</td>
+                <td>{{ reserva.ubicación }}</td> {# Asumo que 'ubicación' es el nombre del espacio #}
+                <td>{{ reserva.placa }}</td>
+                <td>{{ reserva.fecha_entrada.strftime('%Y-%m-%d %H:%M') if reserva.fecha_entrada else 'N/A' }}</td>
+                <td>{{ reserva.fecha_salida.strftime('%Y-%m-%d %H:%M') if reserva.fecha_salida else 'Activa' }}</td>
+                <td>{{ reserva.fase }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Este cliente no tiene reservas registradas.</p>
+{% endif %}
