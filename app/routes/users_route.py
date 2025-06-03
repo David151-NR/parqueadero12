@@ -25,7 +25,7 @@ def allowed_file(filename):
 def index():
     clientes = Clientes.query.all()
     clientes_serializados = [c.to_dict() for c in clientes]
-    return render_template('cliente/index.html',clientes=clientes_serializados,datausu=current_user)
+    return render_template('cliente/list.html',clientes=clientes_serializados,datausu=current_user)
 
 
 @bp.route('/add/asdfasdfa', methods=['GET', 'POST'])

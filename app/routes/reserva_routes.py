@@ -139,19 +139,21 @@ def tabla_reservas_activas():
 
 @bp.route('/reservas_por_cliente/<int:id_cliente>')
 def reservas_por_cliente(id_cliente):
-    """
-    Ruta para obtener y mostrar las reservas de un cliente específico en un formato de tabla
-    adecuado para ser insertado en una ventana modal.
-    """
+   
+    # Ruta para obtener y mostrar las reservas de un cliente específico en un formato de tabla
+    #adecuado para ser insertado en una ventana modal.
+     
     # 1. Buscar el cliente (opcional, para manejo de errores o para obtener el nombre)
     cliente = Clientes.query.get(id_cliente)
     if not cliente:
         # Si el cliente no existe, puedes devolver un mensaje de error o una tabla vacía
         return "<p>Cliente no encontrado.</p>", 404 # Código de estado HTTP 404
+    print(f"Cliente encontrado: {cliente.namecli}") # Añadir esta línea   
 
     # 2. Obtener las reservas asociadas a ese cliente
     # Suponiendo que tu modelo Reserva tiene un campo 'idCliente' que se relaciona con 'id_cliente'
     reservas = Reserva.query.filter_by(idCliente=id_cliente).all()
+    print(f"Reservas encontradas para {cliente.namecli}: {len(reservas)}") # Añadir esta línea
 
     # 3. Renderizar una plantilla HTML ligera que contenga la tabla de reservas
     # Esta plantilla SÓLO debe contener el cuerpo de la tabla (o el contenido que quieres en el modal)

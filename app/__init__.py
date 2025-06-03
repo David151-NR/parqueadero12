@@ -24,7 +24,7 @@ def create_app():
     app.register_blueprint(auth.bp)
     app.register_blueprint(autos_routes.bp)
     app.register_blueprint(motos_routes.bp)
-    app.register_blueprint(reserva_routes.bp)
+    app.register_blueprint(reserva_routes.bp, url_prefix='/reserva')
     app.register_blueprint(espacio_routes.bp)
     app.register_blueprint(Tiparque_routes.bp)   
     app.register_blueprint(admin_routes.bp)   
