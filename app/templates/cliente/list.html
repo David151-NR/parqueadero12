@@ -20,8 +20,10 @@
                      alt="Perfil"
                      style="width: 50px; height: 50px; border-radius: 50%;"></td>
             <td>
-                <a href="{{ url_for('users.edit', id=usuario.idCliente) }}">Editar</a>
-                <a href="{{ url_for('users.delete', id=usuario.idCliente) }}">Eliminar</a>
+           
+                 {# COMENTARIO CORRECTO DE JINJA2 <a href="{{ url_for('users.edit', id=usuario.idCliente) }}">Editar</a>   #}
+                 {#<a href="{{ url_for('users.delete', id=usuario.idCliente) }}">Eliminar</a>#}
+         
                 <div>
                     <button onclick="abrirModalReservasCliente('{{ usuario.idCliente }}', '{{ usuario.namecli }}')"
                             class="btn-agregar">
@@ -54,7 +56,7 @@
 {% endblock %}
 {% block scripts %}
 <script>
-    // Función para abrir la ventana modal y mostrar las reservas de un cliente
+   // Función para abrir la ventana modal y mostrar las reservas de un cliente 
     function abrirModalReservasCliente(idCliente) {
         const modal = document.getElementById('modalOverlay'); // Obtiene la ventana modal
         const contenido = document.getElementById('contenidoReservas'); // Obtiene el área donde se mostrarán las reservas

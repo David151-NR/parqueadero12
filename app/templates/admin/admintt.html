@@ -1,427 +1,543 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='prueva.css') }}">
-    <link rel="stylesheet" href="{{url_for('static',filename='w3.css')}}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Panel de Administración</title>
+        <link rel="stylesheet"
+            href="{{ url_for('static', filename='prueva.css') }}">
+        <link rel="stylesheet" href="{{url_for('static',filename='w3.css')}}">
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    </head>
 
-<body>
+    <body>
 
-    <nav class="navbar navbar-dark bg-dark">
-        <!-- Encabezado con título y botones -->
-        <div class="titulo-admin">
-            <span class="navbar-brand">Panel de Administración</span>
-        </div>
-    </nav>
-    <!-- Barra de navegación -->
-    <nav class="navbar navbar-dark bg-dark">
+        <nav class="navbar navbar-dark bg-dark">
+            <!-- Encabezado con título y botones -->
+            <div class="titulo-admin">
+                <span class="navbar-brand">Panel de Administración</span>
+            </div>
+        </nav>
+        <!-- Barra de navegación -->
+        <nav class="navbar navbar-dark bg-dark">
 
-        <div class="container">
-            <div class="button-group">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acercaModal">
-                    <i class="bi bi-info-circle"></i> Acerca de nosotros
-                </button>
-                <button onclick="window.history.back()" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left-circle"></i> Regresar
-                </button>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tarifasModal">
-                    <i class="bi bi-cash-stack"></i> ver atividad
-                </button>
-                <form action="{{ url_for('auth.logout') }}" method="post" style="display: inline;">
-                    <button type="submit" class="btn btn-danger">
-                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+            <div class="container">
+                <div class="button-group">
+                    <button type="button" class="btn btn-primary"
+                        data-bs-toggle="modal" data-bs-target="#acercaModal">
+                        <i class="bi bi-info-circle"></i> Acerca de nosotros
                     </button>
-                </form>
+                    <button onclick="window.history.back()"
+                        class="btn btn-secondary">
+                        <i class="bi bi-arrow-left-circle"></i> Regresar
+                    </button>
+                    <button type="button" class="btn btn-primary"
+                        data-bs-toggle="modal" data-bs-target="#tarifasModal">
+                        <i class="bi bi-cash-stack"></i> ver atividad
+                    </button>
+                    <form action="{{ url_for('auth.logout') }}" method="post"
+                        style="display: inline;">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                        </button>
+                    </form>
+                </div>
             </div>
+        </nav>
+        <div class="text-center mt-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div
+                class="flash-message alert alert-{{ category }} alert-dismissible fade show"
+                role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
         </div>
-    </nav>
-    <div class="text-center mt-3">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="flash-message alert alert-{{ category }} alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-    </div>
-    <div class="container my-5">
-        <div class="row g-4">
-            <!-- Tarjetas de módulos -->
-            <div class="col-md-3">
-                <div class="card h-100 shadow module-card" data-bs-toggle="modal" data-bs-target="#clientesModal">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Clientes</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card h-100 shadow module-card" data-bs-toggle="modal" data-bs-target="#garajesModal">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Tipos de garaje</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card h-100 shadow module-card" data-bs-toggle="modal" data-bs-target="#espaciosModal">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Espacios</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="card h-100 shadow module-card" data-bs-toggle="modal" data-bs-target="#reservasModal">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Reservas</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modales para cada módulo -->
-    <!-- Modal Clientes -->
-    <div class="modal fade" id="clientesModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Gestión de Clientes</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <button class="nav-link active" data-bs-toggle="tab"
-                                data-bs-target="#agregarCliente">Agregar</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab"
-                                data-bs-target="#editarCliente">Editar</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab"
-                                data-bs-target="#eliminarCliente">Eliminar</button>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content mt-3">
-                        <!-- Agregar Cliente -->
-                        <div class="tab-pane fade show active" id="agregarCliente">
-                            <form action="{{ url_for('users.add') }}" method="post" enctype="multipart/form-data">
-
-                                <div class="mb-3">
-                                    <label for="namecli" class="form-label">Nombre completo</label>
-                                    <input type="text" class="form-control" id="namecli" name="namecli" required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="passworduser" class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control" id="passworduser" name="passworduser"
-                                        required>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="img1" class="form-label">Imagen de perfil (opcional)</label>
-                                    <input type="file" class="form-control" id="imgper" name="imgper"
-                                        accept="image/*">
-                                </div>
-
-                                <button type="submit" class="btn btn-success">Guardar</button>
-                            </form>
-
+        <div class="container my-5">
+            <div class="row g-4">
+                <!-- Tarjetas de módulos -->
+                <div class="col-md-3">
+                    <div class="card h-100 shadow module-card"
+                        data-bs-toggle="modal" data-bs-target="#clientesModal">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Clientes</h5>
                         </div>
-                        <!-- Editar Cliente -->
-                        <div class="tab-pane fade" id="editarCliente">
-                            <form id="editForm" method="POST">
-                                <div class="mb-3">
-                                    <label for="clienteSelect">Buscar y seleccionar cliente</label>
-                                    <input type="text" class="form-control mb-2" id="busquedaCliente"
-                                        placeholder="Escribe para buscar...">
-                                    <select class="form-select" id="clienteSelect" name="idCliente" size="5">
-                                        {% for cliente in clientes %}
-                                        <option value="{{ cliente.idCliente }}">{{ cliente.namecli }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label>Nuevo nombre</label>
-                                    <input type="text" class="form-control" name="namecli" id="inputNombre" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label>Correo</label>
-                                    <input type="correo" class="form-control" name="correo" id="inputCorreo">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Actualizar</button>
-                                <!-- <a href="{{ url_for('users.add') }}"  class="btn btn-primary">Actualizar</a> -->
-                            </form>
-                        </div>
+                    </div>
+                </div>
 
-                        <!-- Eliminar Cliente -->
-                        <div class="tab-pane fade" id="eliminarCliente">
-                            <form>
-                                <div class="mb-3">
-                                    <label>Seleccionar cliente a eliminar</label>
-                                    <select class="form-select">
-                                        <option>Cliente 1</option>
-                                        <option>Cliente 2</option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-danger">Eliminar</button>
-                            </form>
+                <div class="col-md-3">
+                    <div class="card h-100 shadow module-card"
+                        data-bs-toggle="modal" data-bs-target="#garajesModal">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Tipos de garaje</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-100 shadow module-card"
+                        data-bs-toggle="modal" data-bs-target="#espaciosModal">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Espacios</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card h-100 shadow module-card"
+                        data-bs-toggle="modal" data-bs-target="#reservasModal">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Reservas</h5>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="garajesModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Gestión de garajes</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <button class="nav-link active" data-bs-toggle="tab"
-                                data-bs-target="#agregarGaraje">Agregar</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#editarGaraje">Editar</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab"
-                                data-bs-target="#eliminarGaraje">Eliminar</button>
-                        </li>
-                    </ul>
 
-                    <div class="tab-content mt-3">
-                        <!-- Agregar garaje -->
-                        <div class="tab-pane fade show active" id="agregarGaraje">
-                            <form id="formAgregarGaraje">
-                                <div class="mb-3">
-                                    <label for="nombre" class="form-label">Nombre del Garaje</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="descripcion" class="form-label">Descripción</label>
-                                    <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="ubicacion" class="form-label">Ubicación</label>
-                                    <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Agregar Garaje</button>
-                            </form>
-                        </div>
+        <!-- Modales para cada módulo -->
+        <!-- Modal Clientes -->
+        <div class="modal fade" id="clientesModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Gestión de Clientes</h5>
+                        <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <button class="nav-link active"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#agregarCliente">Agregar</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#editarCliente">Editar</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#eliminarCliente">Eliminar</button>
+                            </li>
+                        </ul>
 
-                        <!-- Editar garajes -->
-                        <div class="tab-pane fade" id="editarGaraje">
-                            <form>
-                                <div class="mb-3">
-                                    <label>Seleccionar un garaje</label>
-                                    <select class="form-select">
-                                        <option>Garaje 1</option>
-                                        <option>Garaje 2</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label>Nuevo nombre</label>
-                                    <!-- proximamente se agregara para poder editar las imagenes -->
-                                    <input type="text" class="form-control" required>
-                                </div>
-                                <button class="btn btn-primary">Actualizar</button>
-                            </form>
-                        </div>
+                        <div class="tab-content mt-3">
+                            <!-- Agregar Cliente -->
+                            <div class="tab-pane fade show active"
+                                id="agregarCliente">
+                                <form action="{{ url_for('users.add') }}"
+                                    method="post" enctype="multipart/form-data">
 
-                        <!-- Eliminar garajes -->
-                        <div class="tab-pane fade" id="eliminarGaraje">
-                            <form>
-                                <div class="mb-3">
-                                    <label>Seleccionar garajes a eliminar</label>
-                                    <select class="form-select">
-                                        <option>Garaje 1</option>
-                                        <option>Garaje 2</option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-danger">Eliminar</button>
-                            </form>
+                                    <div class="mb-3">
+                                        <label for="namecli"
+                                            class="form-label">Nombre
+                                            completo</label>
+                                        <input type="text" class="form-control"
+                                            id="namecli" name="namecli"
+                                            required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="passworduser"
+                                            class="form-label">Contraseña</label>
+                                        <input type="password"
+                                            class="form-control"
+                                            id="passworduser"
+                                            name="passworduser"
+                                            required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="img1"
+                                            class="form-label">Imagen de perfil
+                                            (opcional)</label>
+                                        <input type="file" class="form-control"
+                                            id="imgper" name="imgper"
+                                            accept="image/*">
+                                    </div>
+
+                                    <button type="submit"
+                                        class="btn btn-success">Guardar</button>
+                                </form>
+
+                            </div>
+                            <!-- Editar Cliente -->
+                            <div class="tab-pane fade" id="editarCliente">
+                                <form id="editForm" method="POST">
+                                    <div class="mb-3">
+                                        <label for="clienteSelect">Buscar y
+                                            seleccionar cliente</label>
+                                        <input type="text"
+                                            class="form-control mb-2"
+                                            id="busquedaCliente"
+                                            placeholder="Escribe para buscar...">
+                                        <select class="form-select"
+                                            id="clienteSelect" name="idCliente"
+                                            size="5">
+                                            {% for cliente in clientes %}
+                                            <option
+                                                value="{{ cliente.idCliente }}">{{
+                                                cliente.namecli }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Nuevo nombre</label>
+                                        <input type="text" class="form-control"
+                                            name="namecli" id="inputNombre"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Correo</label>
+                                        <input type="correo"
+                                            class="form-control" name="correo"
+                                            id="inputCorreo">
+                                    </div>
+                                    <button type="submit"
+                                        class="btn btn-primary">Actualizar</button>
+                                    <!-- <a href="{{ url_for('users.add') }}"  class="btn btn-primary">Actualizar</a> -->
+                                </form>
+                            </div>
+
+                            <!-- Eliminar Cliente -->
+                            <div class="tab-pane fade" id="eliminarCliente">
+                                <form id="formEliminarCliente"> <div
+                                        class="mb-3">
+                                        <label
+                                            for="searchClienteEliminar">Buscar
+                                            cliente a eliminar:</label>
+                                        <input type="search"
+                                            class="form-control"
+                                            id="searchClienteEliminar"
+                                            placeholder="Escribe el nombre del cliente">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label
+                                            for="selectClienteEliminar">Seleccionar
+                                            cliente a eliminar</label>
+                                        <select class="form-select"
+                                            id="selectClienteEliminar">
+                                            <option value>-- Selecciona un
+                                                cliente --</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit"
+                                        class="btn btn-danger">Eliminar
+                                        Cliente</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="espaciosModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Gestión de espacios</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <button class="nav-link active" data-bs-toggle="tab"
-                                data-bs-target="#agregarEspacios">Agregar</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab"
-                                data-bs-target="#editarEspacios">Editar</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab"
-                                data-bs-target="#eliminarEspacios">Eliminar</button>
-                        </li>
-                    </ul>
+        <div class="modal fade" id="garajesModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Gestión de garajes</h5>
+                        <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <button class="nav-link active"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#agregarGaraje">Agregar</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#editarGaraje">Editar</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#eliminarGaraje">Eliminar</button>
+                            </li>
+                        </ul>
 
-                    <div class="tab-content mt-3">
-                        <!-- Agregar espacio -->
-                        <div class="tab-pane fade show active" id="agregarEspacios">
-                            <form action="{{ url_for('espacio.add') }}" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <label for="numero" class="form-label">Número:</label>
-                                    <input type="text" id="numero" name="numero" class="form-input" required>
-                                </div>
+                        <div class="tab-content mt-3">
+                            <!-- Agregar garaje -->
+                            <div class="tab-pane fade show active"
+                                id="agregarGaraje">
+                                <form id="formAgregarGaraje">
+                                    <div class="mb-3">
+                                        <label for="nombre"
+                                            class="form-label">Nombre del
+                                            Garaje</label>
+                                        <input type="text" class="form-control"
+                                            id="nombre" name="nombre" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="descripcion"
+                                            class="form-label">Descripción</label>
+                                        <textarea class="form-control"
+                                            id="descripcion"
+                                            name="descripcion"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="ubicacion"
+                                            class="form-label">Ubicación</label>
+                                        <input type="text" class="form-control"
+                                            id="ubicacion" name="ubicacion"
+                                            required>
+                                    </div>
+                                    <button type="submit"
+                                        class="btn btn-primary">Agregar
+                                        Garaje</button>
+                                </form>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="descripcion" class="form-label">Descripción:</label>
-                                    <textarea id="descripcion" name="descripcion" class="form-input form-textarea"
-                                        required></textarea>
-                                </div>
+                            <!-- Editar garajes -->
+                            <div class="tab-pane fade" id="editarGaraje">
+                                <form>
+                                    <div class="mb-3">
+                                        <label>Seleccionar un garaje</label>
+                                        <select class="form-select">
+                                            <option>Garaje 1</option>
+                                            <option>Garaje 2</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Nuevo nombre</label>
+                                        <!-- proximamente se agregara para poder editar las imagenes -->
+                                        <input type="text" class="form-control"
+                                            required>
+                                    </div>
+                                    <button
+                                        class="btn btn-primary">Actualizar</button>
+                                </form>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="ubicacion" class="form-label">Ubicación:</label>
-                                    <input type="text" id="ubicacion" name="ubicacion" class="form-input" required>
-                                </div>
-
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="disponible" name="disponible" class="checkbox-input"
-                                        value="true">
-                                    <label for="disponible" class="checkbox-label">Disponible</label>
-                                </div>
-
-                                <button type="submit" class="submit-btn">Guardar Espacio</button>
-                            </form>
-                        </div>
-
-                        <!-- Editar espacio -->
-                        <div class="tab-pane fade" id="editarEspacios">
-                            <form>
-                                <div class="mb-3">
-                                    <label>Seleccionar un espacio</label>
-                                    <select class="form-select">
-                                        <option>Espacio 1</option>
-                                        <option>Espacio 2</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label>cambiar imagen</label>
-                                    <!-- proximamente se agregara para poder editar las imagenes -->
-                                    <input type="text" class="form-control" required>
-                                </div>
-                                <button class="btn btn-primary">Actualizar</button>
-                            </form>
-                        </div>
-
-                        <!-- Eliminar garajes -->
-                        <div class="tab-pane fade" id="eliminarEspacios">
-                            <form>
-                                <div class="mb-3">
-                                    <label>Seleccionar espacio a eliminar</label>
-                                    <select class="form-select">
-                                        <option>Espacio 1</option>
-                                        <option>Espacio 2</option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-danger">Eliminar</button>
-                            </form>
+                            <!-- Eliminar garajes -->
+                            <div class="tab-pane fade" id="eliminarGaraje">
+                                <form>
+                                    <div class="mb-3">
+                                        <label>Seleccionar garajes a
+                                            eliminar</label>
+                                        <select class="form-select">
+                                            <option>Garaje 1</option>
+                                            <option>Garaje 2</option>
+                                        </select>
+                                    </div>
+                                    <button
+                                        class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="modal fade" id="reservasModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Gestión de reservas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <button class="nav-link active" data-bs-toggle="tab"
-                                data-bs-target="#agregarReserva">Agregar</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab"
-                                data-bs-target="#editarReserva">Editar</button>
-                        </li>
-                        <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab"
-                                data-bs-target="#eliminarReserva">Eliminar</button>
-                        </li>
-                    </ul>
+        <div class="modal fade" id="espaciosModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Gestión de espacios</h5>
+                        <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <button class="nav-link active"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#agregarEspacios">Agregar</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#editarEspacios">Editar</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#eliminarEspacios">Eliminar</button>
+                            </li>
+                        </ul>
 
-                    <div class="tab-content mt-3">
-                         {% if espacio %}
-                        <!-- Agregar Reserva -->
-                        <div class="tab-pane fade show active" id="agregarReserva">
-                            <form action="{{ url_for('reserva.crear_reserva', id_espacio=espacio.idEspacio) }}"
-                                method="POST">
-                                <div class="mb-3">
-                                    <label for="idcliente" class="form-label">ID Cliente</label>
-                                    <input type="text" class="form-control" id="idcliente" name="idcliente" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="Correo" class="form-label">Correo</label>
-                                    <input type="email" class="form-control" id="Correo" name="Correo" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="Placa" class="form-label">Placa del Vehículo</label>
-                                    <input type="text" class="form-control" id="Placa" name="Placa" required>
-                                </div>
-                                <button type="submit" class="btn btn-success">Guardar</button>
-                            </form>
-                        </div>
-                         {% endif %}
-                        <!-- Editar Reserva -->
-                
-                        <!-- Eliminar garajes -->
-                        <div class="tab-pane fade" id="eliminarReserva">
-                            <form>
-                                <div class="mb-3">
-                                    <label>Seleccionar Reserva a eliminar</label>
-                                    <select class="form-select">
-                                        <option>Reserva 1</option>
-                                        <option>Reserva 2</option>
-                                    </select>
-                                </div>
-                                <button class="btn btn-danger">Eliminar</button>
-                            </form>
+                        <div class="tab-content mt-3">
+                            <!-- Agregar espacio -->
+                            <div class="tab-pane fade show active"
+                                id="agregarEspacios">
+                                <form action="{{ url_for('espacio.add') }}"
+                                    method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="numero"
+                                            class="form-label">Número:</label>
+                                        <input type="text" id="numero"
+                                            name="numero" class="form-input"
+                                            required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="descripcion"
+                                            class="form-label">Descripción:</label>
+                                        <textarea id="descripcion"
+                                            name="descripcion"
+                                            class="form-input form-textarea"
+                                            required></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="ubicacion"
+                                            class="form-label">Ubicación:</label>
+                                        <input type="text" id="ubicacion"
+                                            name="ubicacion" class="form-input"
+                                            required>
+                                    </div>
+
+                                    <div class="checkbox-group">
+                                        <input type="checkbox" id="disponible"
+                                            name="disponible"
+                                            class="checkbox-input"
+                                            value="true">
+                                        <label for="disponible"
+                                            class="checkbox-label">Disponible</label>
+                                    </div>
+
+                                    <button type="submit"
+                                        class="submit-btn">Guardar
+                                        Espacio</button>
+                                </form>
+                            </div>
+
+                            <!-- Editar espacio -->
+                            <div class="tab-pane fade" id="editarEspacios">
+                                <form>
+                                    <div class="mb-3">
+                                        <label>Seleccionar un espacio</label>
+                                        <select class="form-select">
+                                            <option>Espacio 1</option>
+                                            <option>Espacio 2</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>cambiar imagen</label>
+                                        <!-- proximamente se agregara para poder editar las imagenes -->
+                                        <input type="text" class="form-control"
+                                            required>
+                                    </div>
+                                    <button
+                                        class="btn btn-primary">Actualizar</button>
+                                </form>
+                            </div>
+
+                            <!-- Eliminar garajes -->
+                            <div class="tab-pane fade" id="eliminarEspacios">
+                                <form>
+                                    <div class="mb-3">
+                                        <label>Seleccionar espacio a
+                                            eliminar</label>
+                                        <select class="form-select">
+                                            <option>Espacio 1</option>
+                                            <option>Espacio 2</option>
+                                        </select>
+                                    </div>
+                                    <button
+                                        class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+        <div class="modal fade" id="reservasModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Gestión de reservas</h5>
+                        <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <button class="nav-link active"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#agregarReserva">Agregar</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#editarReserva">Editar</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab"
+                                    data-bs-target="#eliminarReserva">Eliminar</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content mt-3">
+                            {% if espacio %}
+                            <!-- Agregar Reserva -->
+                            <div class="tab-pane fade show active"
+                                id="agregarReserva">
+                                <form
+                                    action="{{ url_for('reserva.crear_reserva', id_espacio=espacio.idEspacio) }}"
+                                    method="POST">
+                                    <div class="mb-3">
+                                        <label for="idcliente"
+                                            class="form-label">ID
+                                            Cliente</label>
+                                        <input type="text" class="form-control"
+                                            id="idcliente" name="idcliente"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Correo"
+                                            class="form-label">Correo</label>
+                                        <input type="email" class="form-control"
+                                            id="Correo" name="Correo" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Placa"
+                                            class="form-label">Placa del
+                                            Vehículo</label>
+                                        <input type="text" class="form-control"
+                                            id="Placa" name="Placa" required>
+                                    </div>
+                                    <button type="submit"
+                                        class="btn btn-success">Guardar</button>
+                                </form>
+                            </div>
+                            {% endif %}
+                            <!-- Editar Reserva -->
+
+                            <!-- Eliminar garajes -->
+                            <div class="tab-pane fade" id="eliminarReserva">
+                                <form>
+                                    <div class="mb-3">
+                                        <label>Seleccionar Reserva a
+                                            eliminar</label>
+                                        <select class="form-select">
+                                            <option>Reserva 1</option>
+                                            <option>Reserva 2</option>
+                                        </select>
+                                    </div>
+                                    <button
+                                        class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
         document.getElementById('formAgregarGaraje').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -455,7 +571,7 @@
                 });
         });
     </script>
-    <script>
+        <script>
         const clientes = {{ clientes | tojson | safe }};
         const busquedaInput = document.getElementById('busquedaCliente');
         const select = document.getElementById('clienteSelect');
@@ -493,9 +609,105 @@
             select.dispatchEvent(new Event('change'));
         }
     </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Asumiendo que los datos de 'clientes' están disponibles globalmente
+        // Si 'clientes' viene de Jinja2, asegúrate de que este script se ejecute DESPUÉS de su definición.
+        // Ejemplo: const clientesParaEliminar = {{ clientes | tojson | safe }};
+        // Para demostración, usaremos un arreglo de ejemplo si estás probando directamente:
+        const clientesParaEliminar = [
+            { idCliente: 1, namecli: 'Juan Pérez', correo: 'juan.perez@example.com' },
+            { idCliente: 2, namecli: 'María García', correo: 'maria.garcia@example.com' },
+            { idCliente: 3, namecli: 'Pedro López', correo: 'pedro.lopez@example.com' },
+            { idCliente: 4, namecli: 'Ana Martínez', correo: 'ana.martinez@example.com' },
+            { idCliente: 5, namecli: 'Carlos Ruíz', correo: 'carlos.ruiz@example.com' }
+        ];
 
+        const searchInputEliminar = document.getElementById('searchClienteEliminar');
+        const selectEliminar = document.getElementById('selectClienteEliminar');
+        const formEliminar = document.getElementById('formEliminarCliente');
 
+        // Función para poblar el menú desplegable con clientes
+        function populateClientSelect(clientsToDisplay) {
+            selectEliminar.innerHTML = '<option value="">-- Selecciona un cliente --</option>'; // Limpiar y agregar opción predeterminada
+            clientsToDisplay.forEach(c => {
+                const option = document.createElement('option');
+                option.value = c.idCliente;
+                option.textContent = c.namecli;
+                selectEliminar.appendChild(option);
+            });
+        }
 
-</body>
+        // Población inicial del menú desplegable cuando se carga la página
+        populateClientSelect(clientesParaEliminar);
+
+        // Escuchar la entrada en el campo de búsqueda
+        searchInputEliminar.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredClients = clientesParaEliminar.filter(c => 
+                c.namecli.toLowerCase().includes(searchTerm)
+            );
+            populateClientSelect(filteredClients);
+        });
+
+        // Manejar el envío del formulario para la eliminación
+        formEliminar.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevenir el envío predeterminado del formulario
+
+            const idClienteAEliminar = selectEliminar.value;
+
+            if (!idClienteAEliminar) {
+                alert('Por favor, selecciona un cliente para eliminar.');
+                return;
+            }
+
+            // Diálogo de confirmación para la eliminación
+            if (!confirm(`¿Estás seguro de que quieres eliminar al cliente con ID ${idClienteAEliminar}?`)) {
+                return; // El usuario canceló la eliminación
+            }
+
+            // Realizar la eliminación a través de la API Fetch (similar a tu POST de /garaje)
+            fetch(`/eliminar_cliente/${idClienteAEliminar}`, { // Usa un endpoint DELETE o POST
+                method: 'DELETE', // O 'POST' si tu backend maneja DELETE a través de POST
+                headers: {
+                    'Content-Type': 'application/json'
+                    // Podrías necesitar 'X-CSRFToken': 'tu_token_aqui' si usas protección CSRF
+                }
+                // body: JSON.stringify({ id: idClienteAEliminar }) // Opcional, si el backend espera un cuerpo JSON
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // Verifica si la respuesta es OK (estado 200-299)
+                    // Si no, parsea el mensaje de error del cuerpo si está disponible
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.error || 'Error al eliminar cliente');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Cliente eliminado con éxito.');
+                    // Opcionalmente, elimina el cliente eliminado del arreglo local 'clientesParaEliminar'
+                    // y actualiza el menú desplegable.
+                    const index = clientesParaEliminar.findIndex(c => c.idCliente == idClienteAEliminar);
+                    if (index > -1) {
+                        clientesParaEliminar.splice(index, 1); // Eliminar del arreglo
+                        populateClientSelect(clientesParaEliminar); // Actualizar menú desplegable
+                        searchInputEliminar.value = ''; // Limpiar búsqueda
+                    }
+                } else {
+                    alert('Error: ' + (data.error || 'No se pudo eliminar el cliente.'));
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud de eliminación:', error);
+                alert('Ocurrió un error al intentar eliminar el cliente: ' + error.message);
+            });
+        });
+    });
+</script>
+
+    </body>
 
 </html>

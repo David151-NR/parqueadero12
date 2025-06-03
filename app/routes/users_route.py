@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash,jsonify
 from flask_login import login_required,current_user
 from werkzeug.utils import secure_filename
 from app.models.Clientes import Clientes
@@ -91,17 +91,52 @@ def edit(id):
 
     return render_template('cliente/edit.html', datauser=cliente)
 
+# Suponiendo que estás usando Flask
+# Datos de ejemplo (reemplazar con interacción real de la base de datos)
+clientes_db = [
+    {"idCliente": 1, "namecli": "Juan Pérez", "correo": "juan.perez@example.com"},
+    {"idCliente": 2, "namecli": "María García", "correo": "maria.garcia@example.com"},
+    {"idCliente": 3, "namecli": "Pedro López", "correo": "pedro.lopez@example.com"},
+    {"idCliente": 4, "namecli": "Ana Martínez", "correo": "ana.martinez@example.com"},
+    {"idCliente": 5, "namecli": "Carlos Ruíz", "correo": "carlos.ruiz@example.com"}
+]
 
+@bp.route('/eliminar_cliente/<int:client_id>', methods=['DELETE'])
+def eliminar_cliente(client_id):
+    cliente_a_eliminar = Clientes.query.get(client_id)
 
+    # 1. Verificar si el cliente existe
+    if not cliente_a_eliminar:
+        return jsonify({"success": False, "error": f"Cliente con ID {client_id} no encontrado."}), 404
 
-@bp.route('/delete/<int:id>')
-def delete(id):
-    clientes = Clientes.query.get_or_404(id)
-    db.session.delete(clientes)
-    db.session.commit()
+    # 2. Validar si el cliente tiene reservas.
+    #    'cliente_a_eliminar.reservas' accederá a la lista de objetos Reserva relacionados.
+    #    Si la lista no está vacía, significa que tiene al menos una reserva.
+    if cliente_a_eliminar.reservas:
+        # Si quisieras ser más específico sobre "reservas activas" (por ejemplo, usando un campo 'estado' en Reserva)
+        # from datetime import date
+        # reservas_activas = [r for r in cliente_a_eliminar.reservas if r.estado == 'activa' and r.fecha_fin >= date.today()]
+        # if reservas_activas:
+        # El mensaje se mantiene genérico si solo compruebas si hay CUALQUIER reserva
+        return jsonify({"success": False, "error": "No se puede eliminar el cliente. Tiene reservas asociadas."}), 400
 
-    return redirect(url_for('clientes.index'))
+    # 3. Validar si el cliente tiene motos asociadas
+    if cliente_a_eliminar.motos:
+        return jsonify({"success": False, "error": "No se puede eliminar el cliente. Tiene motos asociadas."}), 400
 
+    # 4. Validar si el cliente tiene autos asociados
+    if cliente_a_eliminar.autos:
+        return jsonify({"success": False, "error": "No se puede eliminar el cliente. Tiene autos asociados."}), 400
+
+    # Si pasa todas las validaciones (no tiene reservas, motos ni autos)
+    try:
+        db.session.delete(cliente_a_eliminar)
+        db.session.commit()
+        return jsonify({"success": True, "message": f"Cliente con ID {client_id} eliminado correctamente."}), 200
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error al intentar eliminar cliente de la BD: {e}")
+        return jsonify({"success": False, "error": "Error interno del servidor al eliminar cliente."}), 500
 
 
 @bp.route('/users/<int:idCliente>/reservas')

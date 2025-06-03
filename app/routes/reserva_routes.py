@@ -158,7 +158,7 @@ def reservas_por_cliente(id_cliente):
     # 3. Renderizar una plantilla HTML ligera que contenga la tabla de reservas
     # Esta plantilla SÓLO debe contener el cuerpo de la tabla (o el contenido que quieres en el modal)
     # y NO debe extender 'baseb.html' ni tener etiquetas <html>, <head>, <body>.
-    return render_template('reserva/reservas_cliente_modal_content.html',reservas=reservas,cliente_nombre=cliente.namecli)  
+    return render_template('reserva/_tabla_reservas_activas.html',reservas=reservas,cliente_nombre=cliente.namecli)  
                            
                         
 
