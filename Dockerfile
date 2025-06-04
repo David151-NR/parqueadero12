@@ -6,7 +6,7 @@ COPY requirements.txt .
 RUN pip install --default-timeout=100 --no-cache-dir -r requirements.txt
 # Copiar el resto del código
 COPY . .
-EXPOSE 8080
+EXPOSE 8083
 
 RUN mkdir -p /initial_static && cp -r /app/app/static/. /initial_static/
 
