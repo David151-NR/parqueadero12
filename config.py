@@ -13,8 +13,8 @@ class Config:
     else:
         DB_PORT = raw_port
     DB_NAME = os.environ.get("DB_NAME") 
-    print("antes del mensaje")
-    print(f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
+    print("antes del mensaje", flush=True)
+    print(f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}", flush=True)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = secrets.token_urlsafe(24)
     
