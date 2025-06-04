@@ -47,7 +47,7 @@ def add():
             #flash("⚠ No se encontró la imagen en la solicitud", "error")
             #return redirect(request.url)
 
-        file = request.files['imgper    ']
+        file = request.files['imgper']
 
         #if file.filename == '':
             #flash("⚠ No se seleccionó ninguna imagen", "error")
