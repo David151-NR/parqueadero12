@@ -691,11 +691,6 @@
                 // Realizar la eliminación a través de la API Fetch con método DELETE
                 const response = await fetch(`/eliminar_cliente/${idClienteAEliminar}`, {
                     method: 'DELETE', 
-                    headers: {
-                        'Content-Type': 'application/json'
-                        // Si estás usando CSRF (Cross-Site Request Forgery) protection,
-                        // necesitarías obtener y enviar el token aquí. Por ejemplo:
-                    }
                 });
 
                 if (!response.ok) {
