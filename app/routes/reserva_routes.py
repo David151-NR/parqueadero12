@@ -134,7 +134,7 @@ def finalizar_reserva(id_reserva):
 
 @bp.route('/reserva/tabla_activas')
 def tabla_reservas_activas():
-    reservas = Reserva.query.filter_by(fase='reservado').all()
+    reservas = Reserva.query.filter_by(fase='reservado', idCliente = current_user.idCliente).all()
     return render_template('reserva/_tabla_reservas_activas.html', reservas=reservas)
 
 @bp.route('/reservas_por_cliente/<int:id_cliente>')

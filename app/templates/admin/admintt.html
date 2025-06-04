@@ -44,6 +44,7 @@
                     </button>
                     <form action="{{ url_for('auth.logout') }}" method="post"
                         style="display: inline;">
+                        
                         <button type="submit" class="btn btn-danger">
                             <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
                         </button>
@@ -140,7 +141,7 @@
                                 id="agregarCliente">
                                 <form action="{{ url_for('users.add') }}"
                                     method="post" enctype="multipart/form-data">
-
+                                    
                                     <div class="mb-3">
                                         <label for="namecli"
                                             class="form-label">Nombre
@@ -177,6 +178,7 @@
                             <!-- Editar Cliente -->
                             <div class="tab-pane fade" id="editarCliente">
                                 <form id="editForm" method="POST">
+                                    
                                     <div class="mb-3">
                                         <label for="clienteSelect">Buscar y
                                             seleccionar cliente</label>
@@ -214,7 +216,9 @@
 
                             <!-- Eliminar Cliente -->
                             <div class="tab-pane fade" id="eliminarCliente">
-                                <form id="formEliminarCliente"> <div
+                                <form id="formEliminarCliente"> 
+                                    
+                                    <div
                                         class="mb-3">
                                         <label
                                             for="searchClienteEliminar">Buscar
@@ -325,6 +329,7 @@
                             <!-- Eliminar garajes -->
                             <div class="tab-pane fade" id="eliminarGaraje">
                                 <form>
+                                    
                                     <div class="mb-3">
                                         <label>Seleccionar garajes a
                                             eliminar</label>
@@ -373,6 +378,7 @@
                                 id="agregarEspacios">
                                 <form action="{{ url_for('espacio.add') }}"
                                     method="post" enctype="multipart/form-data">
+                                    
                                     <div class="form-group">
                                         <label for="numero"
                                             class="form-label">Número:</label>
@@ -416,6 +422,7 @@
                             <!-- Editar espacio -->
                             <div class="tab-pane fade" id="editarEspacios">
                                 <form>
+                                    
                                     <div class="mb-3">
                                         <label>Seleccionar un espacio</label>
                                         <select class="form-select">
@@ -437,6 +444,7 @@
                             <!-- Eliminar garajes -->
                             <div class="tab-pane fade" id="eliminarEspacios">
                                 <form>
+                                    
                                     <div class="mb-3">
                                         <label>Seleccionar espacio a
                                             eliminar</label>
@@ -518,6 +526,7 @@
                             <!-- Eliminar garajes -->
                             <div class="tab-pane fade" id="eliminarReserva">
                                 <form>
+                                    
                                     <div class="mb-3">
                                         <label>Seleccionar Reserva a
                                             eliminar</label>
@@ -611,18 +620,10 @@
     </script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Asumiendo que los datos de 'clientes' están disponibles globalmente
-        // Si 'clientes' viene de Jinja2, asegúrate de que este script se ejecute DESPUÉS de su definición.
-        // Ejemplo: const clientesParaEliminar = {{ clientes | tojson | safe }};
-        // Para demostración, usaremos un arreglo de ejemplo si estás probando directamente:
-        const clientesParaEliminar = [
-            { idCliente: 1, namecli: 'Juan Pérez', correo: 'juan.perez@example.com' },
-            { idCliente: 2, namecli: 'María García', correo: 'maria.garcia@example.com' },
-            { idCliente: 3, namecli: 'Pedro López', correo: 'pedro.lopez@example.com' },
-            { idCliente: 4, namecli: 'Ana Martínez', correo: 'ana.martinez@example.com' },
-            { idCliente: 5, namecli: 'Carlos Ruíz', correo: 'carlos.ruiz@example.com' }
-        ];
+        // Variable para almacenar los clientes REALES cargados desde la API
+        let clientesParaEliminar = []; 
 
+        // Referencias a elementos del DOM
         const searchInputEliminar = document.getElementById('searchClienteEliminar');
         const selectEliminar = document.getElementById('selectClienteEliminar');
         const formEliminar = document.getElementById('formEliminarCliente');
@@ -632,16 +633,36 @@
             selectEliminar.innerHTML = '<option value="">-- Selecciona un cliente --</option>'; // Limpiar y agregar opción predeterminada
             clientsToDisplay.forEach(c => {
                 const option = document.createElement('option');
-                option.value = c.idCliente;
-                option.textContent = c.namecli;
+                option.value = c.idCliente; // El valor debe ser el ID del cliente
+                option.textContent = c.namecli; // El texto visible será el nombre del cliente
                 selectEliminar.appendChild(option);
             });
         }
 
-        // Población inicial del menú desplegable cuando se carga la página
-        populateClientSelect(clientesParaEliminar);
+        // Función para cargar los clientes desde la API de Flask
+        async function loadClientsForDeletion() { // Renombrada para mayor claridad
+            try {
+                // Realiza una petición GET a tu ruta API /api/clientes
+                const response = await fetch('/api/clientes'); 
+                if (!response.ok) {
+                    // Si la respuesta no es 2xx, lanza un error con el mensaje del servidor si está disponible
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Error al cargar los clientes para eliminación.');
+                }
+                // Asigna los datos reales recibidos de la API
+                clientesParaEliminar = await response.json(); 
+                // Rellena el select con los clientes cargados
+                populateClientSelect(clientesParaEliminar); 
+            } catch (error) {
+                console.error('Error al obtener clientes para eliminación:', error);
+                alert('No se pudieron cargar los clientes para eliminar. Intenta de nuevo: ' + error.message);
+            }
+        }
 
-        // Escuchar la entrada en el campo de búsqueda
+        // Llama a la función para cargar los clientes cuando la página esté lista
+        loadClientsForDeletion();
+
+        // Escuchar la entrada en el campo de búsqueda (la lógica de filtrado se mantiene)
         searchInputEliminar.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase();
             const filteredClients = clientesParaEliminar.filter(c => 
@@ -651,7 +672,7 @@
         });
 
         // Manejar el envío del formulario para la eliminación
-        formEliminar.addEventListener('submit', function(e) {
+        formEliminar.addEventListener('submit', async function(e) { // Usamos 'async' para poder usar 'await'
             e.preventDefault(); // Prevenir el envío predeterminado del formulario
 
             const idClienteAEliminar = selectEliminar.value;
@@ -662,48 +683,50 @@
             }
 
             // Diálogo de confirmación para la eliminación
-            if (!confirm(`¿Estás seguro de que quieres eliminar al cliente con ID ${idClienteAEliminar}?`)) {
+            if (!confirm(`¿Estás seguro de que quieres eliminar al cliente con ID ${idClienteAEliminar}? Esta acción es irreversible.`)) {
                 return; // El usuario canceló la eliminación
             }
 
-            // Realizar la eliminación a través de la API Fetch (similar a tu POST de /garaje)
-            fetch(`/eliminar_cliente/${idClienteAEliminar}`, { // Usa un endpoint DELETE o POST
-                method: 'DELETE', // O 'POST' si tu backend maneja DELETE a través de POST
-                headers: {
-                    'Content-Type': 'application/json'
-                    // Podrías necesitar 'X-CSRFToken': 'tu_token_aqui' si usas protección CSRF
-                }
-                // body: JSON.stringify({ id: idClienteAEliminar }) // Opcional, si el backend espera un cuerpo JSON
-            })
-            .then(response => {
+            try {
+                // Realizar la eliminación a través de la API Fetch con método DELETE
+                const response = await fetch(`/eliminar_cliente/${idClienteAEliminar}`, {
+                    method: 'DELETE', 
+                    headers: {
+                        'Content-Type': 'application/json'
+                        // Si estás usando CSRF (Cross-Site Request Forgery) protection,
+                        // necesitarías obtener y enviar el token aquí. Por ejemplo:
+                        // 'X-CSRFToken': '{{ csrf_token() }}'
+                    }
+                });
+
                 if (!response.ok) {
-                    // Verifica si la respuesta es OK (estado 200-299)
-                    // Si no, parsea el mensaje de error del cuerpo si está disponible
-                    return response.json().then(errorData => {
-                        throw new Error(errorData.error || 'Error al eliminar cliente');
-                    });
+                    // Si la respuesta no es OK (ej. 400, 404, 500), parsea el JSON del error
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'Error desconocido al eliminar cliente.');
                 }
-                return response.json();
-            })
-            .then(data => {
+
+                // Si es OK, sigue procesando la respuesta JSON
+                const data = await response.json(); 
+
                 if (data.success) {
-                    alert('Cliente eliminado con éxito.');
-                    // Opcionalmente, elimina el cliente eliminado del arreglo local 'clientesParaEliminar'
-                    // y actualiza el menú desplegable.
+                    alert('Cliente eliminado con éxito: ' + data.message);
+                    // Elimina el cliente del arreglo local y actualiza el menú desplegable.
                     const index = clientesParaEliminar.findIndex(c => c.idCliente == idClienteAEliminar);
                     if (index > -1) {
                         clientesParaEliminar.splice(index, 1); // Eliminar del arreglo
                         populateClientSelect(clientesParaEliminar); // Actualizar menú desplegable
-                        searchInputEliminar.value = ''; // Limpiar búsqueda
+                        searchInputEliminar.value = ''; // Limpiar campo de búsqueda
+                        selectEliminar.value = ''; // Resetear la selección del dropdown
                     }
                 } else {
-                    alert('Error: ' + (data.error || 'No se pudo eliminar el cliente.'));
+                    // Esto maneja errores lógicos del backend (ej. cliente con reservas)
+                    alert('Error al eliminar: ' + (data.error || 'No se pudo eliminar el cliente.'));
                 }
-            })
-            .catch(error => {
+            } catch (error) {
+                // Esto maneja errores de red o errores lanzados en los 'then'
                 console.error('Error en la solicitud de eliminación:', error);
-                alert('Ocurrió un error al intentar eliminar el cliente: ' + error.message);
-            });
+                alert('Ocurrió un error grave al intentar eliminar el cliente: ' + error.message);
+            }
         });
     });
 </script>
